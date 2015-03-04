@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-git 
+
 # Create your models here.
 class UserProfile(models.Model):
     user = models.OneToOneField(User)

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head lang="en">
+
+    <link rel="icon" href="{% static "images/aris.jpg"%}" />
+    <meta charset="UTF-8">
+    <title>Kousi kousi</title>
+
+</head>
+<body>
+
+    <h1>Hello world</h1>
+    <img src="{% static "images/aris.jpg"%}" alt="Ari ari" />
+
+
+    {% block body_block %}{% endblock %}
+</body>
+</html>
