@@ -1,7 +1,3 @@
 asdfasf
 lkjh=d
-<<<<<<< HEAD
-12345
-=======
-arismousi
->>>>>>> 85f4938877fd960bdf6f7e54f976d05c96561605
+147852
