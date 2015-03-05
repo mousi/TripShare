@@ -7,3 +7,7 @@ def index(request):
 
 def about(request):
     return render(request, 'about.html', {})
+
+def test(request):
+    context_dict = {}
+    return render(request, 'test.html', context_dict)
