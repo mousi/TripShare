@@ -1,2 +1,0 @@
-# TripShare
-TripShare
