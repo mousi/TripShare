@@ -6,7 +6,7 @@ django.setup()
 
 import datetime
 
-from TripShare.models import User, UserProfile, Trip, Ratings, Requests, TripUsers
+from TripShare.models import User, UserProfile, Trip, Rating, Request, TripUser
 
 
 def populate():
@@ -82,15 +82,15 @@ def add_trip(description, creator, source, destination, datetime, carOwner=None,
     return trip
 
 def add_request(user, trip, hasCar=False, passengers=None, reqAccepted=None):
-    req=Requests.objects.get_or_create(user=user, trip=trip, hasCar=hasCar, passengers=passengers, reqAccepted=reqAccepted)[0]
+    req=Request.objects.get_or_create(user=user, trip=trip, hasCar=hasCar, passengers=passengers, reqAccepted=reqAccepted)[0]
     return req
 
 def add_user_trip(user, trip):
-    ut=TripUsers.objects.get_or_create(user=user,trip=trip)[0]
+    ut=TripUser.objects.get_or_create(user=user,trip=trip)[0]
     return ut
 
 def add_rating(userRater, userRated, rating, comments=""):
-    r=Ratings.objects.get_or_create(userRater=userRater, userRated=userRated, rating=rating, comments=comments)[0]
+    r=Rating.objects.get_or_create(userRater=userRater, userRated=userRated, rating=rating, comments=comments)[0]
     return r
 
 def add_userProfile(username, password, isDriver=False, avatar="", email="", first_name="",last_name=""):

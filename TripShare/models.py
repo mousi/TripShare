@@ -35,7 +35,7 @@ class Trip(models.Model):
         return self.desc
 
 # A user can rate another user with a rating.
-class Ratings(models.Model):
+class Rating(models.Model):
     userRater = models.ForeignKey(UserProfile, related_name='rating_user')
     userRated = models.ForeignKey(UserProfile, related_name='rated_user')
     rating = models.IntegerField()
@@ -45,7 +45,7 @@ class Ratings(models.Model):
         unique_together = ('userRater', 'userRated')
 
 #The requests that users make to join a trip.
-class Requests(models.Model):
+class Request(models.Model):
     user = models.ForeignKey(UserProfile)
     trip = models.ForeignKey(Trip)
     hasCar = models.BooleanField(default=False)
@@ -56,7 +56,7 @@ class Requests(models.Model):
         unique_together = ('user', 'trip')
 
 #The users that have been approved to join the trip + the creator of the trip.
-class TripUsers(models.Model):
+class TripUser(models.Model):
     user = models.ForeignKey(UserProfile)
     trip = models.ForeignKey(Trip)
 
