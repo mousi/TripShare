@@ -41,7 +41,7 @@ class Trip(models.Model):
 class Ratings(models.Model):
     userRater = models.ForeignKey(UserProfile, related_name='rating_user')
     userRated = models.ForeignKey(UserProfile, related_name='rated_user')
-    rating = models.IntegerField(default=1)
+    rating = models.IntegerField()
 
     class Meta:
         unique_together = ('userRater', 'userRated')
