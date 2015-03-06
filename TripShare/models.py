@@ -10,6 +10,8 @@ class UserProfile(models.Model):
     driver = models.BooleanField(default=False)
     hasCar = models.BooleanField(default=False)
     numRatings = models.IntegerField(default=0)
+    # Avatar (image)
+    avatar = models.ImageField(upload_to='avatars', blank=True)
     #RatingSum ???
     avgRating = models.FloatField(null=True)
 
