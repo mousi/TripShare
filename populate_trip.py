@@ -13,8 +13,7 @@ def populate():
     # Add some users
     user_mousi = add_userProfile(username="mousi",
                                  password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
-                                 driver=True,
-                                 hasCar=True,
+                                 isDriver=True,
                                  first_name="Kostas",
                                  last_name="K",
                                  email="dummy_email@tripshare.co.uk",
@@ -22,7 +21,7 @@ def populate():
 
     user_liverpoolaras = add_userProfile(username="liverpoolaras",
              password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
-             driver=True,
+             isDriver=True,
              avatar="avatars/gavros.jpg",
              email="dummy_email2@tripshare.co.uk",
              first_name="Vag",
@@ -38,10 +37,9 @@ def populate():
              email="dummy_email3@tripshare.co.uk")
     user_jenny = add_userProfile(username="jenny",
              password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
-             driver=True)
+             isDriver=True)
     user_molester = add_userProfile(username="molester",
-             password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
-             hasCar=True)
+             password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=")
 
     # Add some trips
     trip1=add_trip(description="A road trip from Glasgow to London. We will stop in Liverpool to see THE TEAM!",
@@ -58,31 +56,46 @@ def populate():
              pass_num=1,
              datetime=datetime.datetime(2015,4,11,9,0,0),
              carOwner=user_molester)
+    trip3=add_trip(description="Going from Birmingham to Newcastle",
+                   creator=user_geo,
+                   source="Birmingham",
+                   destination="Newcastle",
+                   datetime=datetime.datetime(2015,5,1,12,0,0))
+
+    # Add some requests
     add_request(user=user_thanos, trip=trip1)
     add_request(user=user_geo, trip=trip1)
+    add_request(user=user_jenny, trip=trip1, reqAccepted=True)
+    add_request(user=user_molester, trip=trip2, hasCar=True, passengers=1, reqAccepted=True)
+
+    # Add the accepted users to the trips
     add_user_trip(user=user_molester, trip=trip2)
     add_user_trip(user=user_jenny, trip=trip1)
 
+    # Add some ratings
+    add_rating(user_jenny, user_molester, 5, "Very good guy. Had loads of fun in our last trip! ;)")
+    add_rating(user_thanos, user_liverpoolaras, 1, "Really boring guy... Was sleeping during the entire trip!")
 
-def add_trip(description, creator, source, destination, datetime, carOwner=None, pass_num=0):
+
+def add_trip(description, creator, source, destination, datetime, carOwner=None, pass_num=None):
     trip=Trip.objects.get_or_create(desc=description, creator=creator, source=source, destination=destination, pass_num=pass_num, datetime=datetime, carOwner=carOwner)[0]
     return trip
 
-def add_request(user, trip):
-    req=Requests.objects.get_or_create(user=user, trip=trip)[0]
+def add_request(user, trip, hasCar=False, passengers=None, reqAccepted=None):
+    req=Requests.objects.get_or_create(user=user, trip=trip, hasCar=hasCar, passengers=passengers, reqAccepted=reqAccepted)[0]
     return req
 
 def add_user_trip(user, trip):
     ut=TripUsers.objects.get_or_create(user=user,trip=trip)[0]
     return ut
 
-def add_rating(userRater, userRated, rating):
-    r=Ratings.objects.get_or_create(userRater=userRater, userRated=userRated, rating=rating)[0]
+def add_rating(userRater, userRated, rating, comments=""):
+    r=Ratings.objects.get_or_create(userRater=userRater, userRated=userRated, rating=rating, comments=comments)[0]
     return r
 
-def add_userProfile(username, password, avgRating=None, driver=False, hasCar=False, numRatings=0, avatar="", email="", first_name="",last_name=""):
+def add_userProfile(username, password, isDriver=False, avatar="", email="", first_name="",last_name=""):
     user = add_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
-    up = UserProfile.objects.get_or_create(user=user, driver=driver, hasCar=hasCar, numRatings=numRatings, avgRating=avgRating, avatar=avatar)[0]
+    up = UserProfile.objects.get_or_create(user=user, isDriver=isDriver, avatar=avatar)[0]
     return up
 
 def add_user(username, password, email, first_name, last_name):
