@@ -1,65 +1,108 @@
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'TripShareProject.settings')
 
 import django
 django.setup()
 
-from rango.models import Category, Page
+import datetime
+
+from TripShare.models import User, UserProfile, Trip, Rating, Request, TripUser
 
 
 def populate():
-    python_cat = add_cat('Python', 128, 64)
+    # Add some users
+    user_mousi = add_userProfile(username="mousi",
+                                 password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
+                                 isDriver=True,
+                                 first_name="Kostas",
+                                 last_name="K",
+                                 email="dummy_email@tripshare.co.uk",
+                                 avatar="avatars/rango.jpg")
 
-    add_page(cat=python_cat,
-        title="Official Python Tutorial",
-        url="http://docs.python.org/2/tutorial/")
+    user_liverpoolaras = add_userProfile(username="liverpoolaras",
+             password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
+             isDriver=True,
+             avatar="avatars/gavros.jpg",
+             email="dummy_email2@tripshare.co.uk",
+             first_name="Vag",
+             last_name="Karv")
+    user_geo = add_userProfile(username="geo",
+             password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
+             first_name="Geo",
+             last_name="Gv")
+    user_thanos = add_userProfile(username="thanos",
+             password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
+             first_name="Thanos",
+             last_name="S",
+             email="dummy_email3@tripshare.co.uk")
+    user_jenny = add_userProfile(username="jenny",
+             password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
+             isDriver=True)
+    user_molester = add_userProfile(username="molester",
+             password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=")
 
-    add_page(cat=python_cat,
-        title="How to Think like a Computer Scientist",
-        url="http://www.greenteapress.com/thinkpython/")
+    # Add some trips
+    trip1=add_trip(description="A road trip from Glasgow to London. We will stop in Liverpool to see THE TEAM!",
+             creator=user_mousi,
+             source="Glasgow",
+             destination="London",
+             pass_num=3,
+             datetime=datetime.datetime(2015,4,1,10,0,0),
+             carOwner=user_mousi)
+    trip2=add_trip(description="Looking for someone with a car to travel to Manchester from Aberdeen",
+             creator=user_liverpoolaras,
+             source="Aberdeen",
+             destination="manchester",
+             pass_num=1,
+             datetime=datetime.datetime(2015,4,11,9,0,0),
+             carOwner=user_molester)
+    trip3=add_trip(description="Going from Birmingham to Newcastle",
+                   creator=user_geo,
+                   source="Birmingham",
+                   destination="Newcastle",
+                   datetime=datetime.datetime(2015,5,1,12,0,0))
 
-    add_page(cat=python_cat,
-        title="Learn Python in 10 Minutes",
-        url="http://www.korokithakis.net/tutorials/python/")
+    # Add some requests
+    add_request(user=user_thanos, trip=trip1)
+    add_request(user=user_geo, trip=trip1)
+    add_request(user=user_jenny, trip=trip1, reqAccepted=True)
+    add_request(user=user_molester, trip=trip2, hasCar=True, passengers=1, reqAccepted=True)
 
-    django_cat = add_cat("Django", 64, 32)
+    # Add the accepted users to the trips
+    add_user_trip(user=user_molester, trip=trip2)
+    add_user_trip(user=user_jenny, trip=trip1)
 
-    add_page(cat=django_cat,
-        title="Official Django Tutorial",
-        url="https://docs.djangoproject.com/en/1.5/intro/tutorial01/")
+    # Add some ratings
+    add_rating(user_jenny, user_molester, 5, "Very good guy. Had loads of fun in our last trip! ;)")
+    add_rating(user_thanos, user_liverpoolaras, 1, "Really boring guy... Was sleeping during the entire trip!")
 
-    add_page(cat=django_cat,
-        title="Django Rocks",
-        url="http://www.djangorocks.com/")
 
-    add_page(cat=django_cat,
-        title="How to Tango with Django",
-        url="http://www.tangowithdjango.com/")
+def add_trip(description, creator, source, destination, datetime, carOwner=None, pass_num=None):
+    trip=Trip.objects.get_or_create(desc=description, creator=creator, source=source, destination=destination, pass_num=pass_num, datetime=datetime, carOwner=carOwner)[0]
+    return trip
 
-    frame_cat = add_cat("Other Frameworks", 32, 16)
+def add_request(user, trip, hasCar=False, passengers=None, reqAccepted=None):
+    req=Request.objects.get_or_create(user=user, trip=trip, hasCar=hasCar, passengers=passengers, reqAccepted=reqAccepted)[0]
+    return req
 
-    add_page(cat=frame_cat,
-        title="Bottle",
-        url="http://bottlepy.org/docs/dev/")
+def add_user_trip(user, trip):
+    ut=TripUser.objects.get_or_create(user=user,trip=trip)[0]
+    return ut
 
-    add_page(cat=frame_cat,
-        title="Flask",
-        url="http://flask.pocoo.org")
+def add_rating(userRater, userRated, rating, comments=""):
+    r=Rating.objects.get_or_create(userRater=userRater, userRated=userRated, rating=rating, comments=comments)[0]
+    return r
 
-    # Print out what we have added to the user.
-    for c in Category.objects.all():
-        for p in Page.objects.filter(category=c):
-            print "- {0} - {1}".format(str(c), str(p))
+def add_userProfile(username, password, isDriver=False, avatar="", email="", first_name="",last_name=""):
+    user = add_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
+    up = UserProfile.objects.get_or_create(user=user, isDriver=isDriver, avatar=avatar)[0]
+    return up
 
-def add_page(cat, title, url, views=0):
-    p = Page.objects.get_or_create(category=cat, title=title, url=url, views=views)[0]
-    return p
-
-def add_cat(name, views, likes):
-    c = Category.objects.get_or_create(name=name, views=views, likes=likes)[0]
-    return c
+def add_user(username, password, email, first_name, last_name):
+    u = User.objects.get_or_create(username=username, password=password, email=email, first_name=first_name, last_name=last_name)[0]
+    return u
 
 # Start execution here!
 if __name__ == '__main__':
-    print "Starting Rango population script..."
+    print "Starting TripShare population script..."
     populate()
