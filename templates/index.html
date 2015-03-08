@@ -4,4 +4,20 @@
 
 {% block body_block %}
     <h2>something</h2>
+
+    <ul>
+    {% for tr in trips %}
+        <li>{{tr.source}} -> {{tr.destination}}</li>
+    {% endfor %}
+    </ul>
+
+    <ol>
+    {% for re in requests %}
+        <li>{{re.user}}</li>
+        <ol>
+            <li>{{re.trip}}</li>
+            <li>{{re.passengers}}</li>
+        </ol>
+        {%endfor%}
+    </ol>
 {% endblock %}
