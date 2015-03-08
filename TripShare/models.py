@@ -27,6 +27,7 @@ class Trip(models.Model):
     destination = models.CharField(max_length=30)
     #passenger_number
     pass_num = models.IntegerField(null=True)
+    cost = models.FloatField(null=True, blank=True)
     datetime = models.DateTimeField()
 
     carOwner = models.ForeignKey(UserProfile, related_name='carOwner', null=True)
@@ -50,6 +51,7 @@ class Request(models.Model):
     trip = models.ForeignKey(Trip)
     hasCar = models.BooleanField(default=False)
     passengers = models.IntegerField(null=True, default=None)
+    cost = models.FloatField(null=True, blank=True)
     reqAccepted = models.NullBooleanField(default=None)
 
     class Meta:
