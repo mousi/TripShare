@@ -107,4 +107,4 @@ def post(request):
 def auth_logout(request):
 
     logout(request)
-    return HttpResponseRedirect('TripShare/index.html')
+    return HttpResponseRedirect('/TripShare/')
