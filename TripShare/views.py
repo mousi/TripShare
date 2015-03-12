@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from TripShare.models import Trip, TripUser, Request
 from TripShare.forms import UserForm,UserProfileForm,TripForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 
 # Create your views here.
@@ -105,4 +105,6 @@ def post(request):
     return render(request, 'post.html', {})
 
 def auth_logout(request):
-    return render(request, 'about.html')
+
+    logout(request)
+    return HttpResponseRedirect('http://127.0.0.1:8000/TripShare/')
