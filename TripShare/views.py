@@ -37,7 +37,7 @@ def addTrip(request):
 def test(request):
     context_dict = {}
     return render(request, 'test.html', context_dict)
-	
+
 def user_login(request):
     print request.method
 
@@ -55,17 +55,17 @@ def user_login(request):
             if user.is_active:
 
                 login(request,user)
-                return HttpResponseRedirect('http://127.0.0.1:8000/TripShare/')
+                return HttpResponseRedirect('/TripShare/')
             else:
 
-                return HttpResponse("Your account now is disables")
+                return HttpResponse("Your account now is disabled.")
         else:
 
             print "Invalid login details, {0}, {1}".format(username,password)
             return HttpResponse("Invalid login details supplied.")
     else:
 
-        return render(request, 'login.html', {})
+        return render(request, 'index.html', {})
 
 
 def register(request):
