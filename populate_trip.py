@@ -75,7 +75,6 @@ def populate():
                    tripdate=datetime.datetime(2015,5,13,13,30,0),
                    dateposted = datetime.datetime(2015,4,2,12,0,0)
     )
-
     # Add some requests
     add_request(user=user_thanos, trip=trip1)
     add_request(user=user_geo, trip=trip1)
