@@ -26,14 +26,12 @@ class Trip(models.Model):
     # To
     destination = models.CharField(max_length=30)
     #passenger_number
-    pass_num = models.IntegerField(null=True)
-    cost = models.FloatField(null=True, blank=True)
+    pass_num = models.IntegerField()
+    cost = models.FloatField(null=True)
     #Date when trip starts
     tripdate = models.DateTimeField()
     #Date the trip is posted
     dateposted = models.DateTimeField()
-
-    carOwner = models.ForeignKey(UserProfile, related_name='carOwner', null=True)
 
     def __unicode__(self):
         return self.desc
@@ -52,9 +50,6 @@ class Rating(models.Model):
 class Request(models.Model):
     user = models.ForeignKey(UserProfile)
     trip = models.ForeignKey(Trip)
-    hasCar = models.BooleanField(default=False)
-    passengers = models.IntegerField(null=True, default=None)
-    cost = models.FloatField(null=True, blank=True)
     reqAccepted = models.NullBooleanField(default=None)
 
     class Meta:
@@ -67,4 +62,3 @@ class TripUser(models.Model):
 
     class Meta:
         unique_together = ('user', 'trip')
-
