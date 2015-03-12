@@ -35,7 +35,7 @@
                 <li><a href="{% url 'index' %}">Home</a></li>
 
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
+                        <li><a href="{% url 'auth_logout' %}?next=/TripShare/">Logout</a></li>
                         <li><a href="{% url 'post' %}">Post Trip</a></li>
                     {% else %}
 						<form class="navbar-form navbar-right">
@@ -45,8 +45,16 @@
 						<div class="form-group">
 							<input type="password" placeholder="Password" class="form-control">
 						</div>
-						<button type="submit" class="btn btn-success">Log in</button>
-						<button type="submit" class="btn btn-success">Register</button>
+
+					<!--	<button type="submit" class="btn btn-success">Log in</button> -->
+					<!--	<a href = ""><button type="submit" class="btn btn-success">Register</button></a> -->
+                        <a href = "{% url 'login' %}" >
+                            <input type = "button" value = "Login" class = "btn btn-success" />
+                        </a>
+                        <a href= "{% url 'register' %}" >
+                            <input type = "button" value="Register" class = "btn btn-success" />
+                        </a>
+
 						</form>				
                     {% endif %}
 					

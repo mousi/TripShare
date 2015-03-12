@@ -63,6 +63,11 @@ ROOT_URLCONF = 'TripShareProject.urls'
 
 WSGI_APPLICATION = 'TripShareProject.wsgi.application'
 
+PASSWORD_HASHERS = (
+'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+)
+
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
