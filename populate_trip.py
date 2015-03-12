@@ -47,22 +47,23 @@ def populate():
              source="Glasgow",
              destination="London",
              pass_num=3,
-             cost=50,
-             datetime=datetime.datetime(2015,4,1,10,0,0),
+             tripdate=datetime.datetime(2015,4,1,10,0,0),
+             dateposted = datetime.datetime(2015,4,2,10,0,0),
              carOwner=user_mousi)
     trip2=add_trip(description="Looking for someone with a car to travel to Manchester from Aberdeen",
              creator=user_liverpoolaras,
              source="Aberdeen",
              destination="manchester",
              pass_num=1,
-             datetime=datetime.datetime(2015,4,11,9,0,0),
+             tripdate=datetime.datetime(2015,4,11,9,0,0),
+             dateposted = datetime.datetime(2015,4,10,8,0,0),
              carOwner=user_molester)
     trip3=add_trip(description="Going from Birmingham to Newcastle",
                    creator=user_geo,
                    source="Birmingham",
                    destination="Newcastle",
-                   pass_num=10,
-                   datetime=datetime.datetime(2015,5,1,12,0,0))
+                   tripdate=datetime.datetime(2015,5,1,12,0,0),
+                   dateposted = datetime.datetime(2015,4,2,12,0,0))
 
     trip4=add_trip(description="Going from Glasgow to Dundee",
                    creator=user_jenny,
@@ -72,6 +73,7 @@ def populate():
                    cost=30,
                    datetime=datetime.datetime(2015,5,13,13,30,0)
                    )
+
     # Add some requests
     add_request(user=user_thanos, trip=trip1)
     add_request(user=user_geo, trip=trip1)
@@ -87,8 +89,8 @@ def populate():
     add_rating(user_thanos, user_liverpoolaras, 1, "Really boring guy... Was sleeping during the entire trip!")
 
 
-def add_trip(description, creator, source, destination, datetime, carOwner=None, pass_num=None, cost=None):
-    trip=Trip.objects.get_or_create(desc=description, creator=creator, source=source, destination=destination, pass_num=pass_num, cost=cost, datetime=datetime, carOwner=carOwner)[0]
+def add_trip(description, creator, source, destination, tripdate, dateposted, carOwner=None, pass_num=None, cost=None):
+    trip=Trip.objects.get_or_create(desc=description, creator=creator, source=source, destination=destination, pass_num=pass_num, cost=cost, tripdate=tripdate, dateposted = dateposted, carOwner=carOwner)[0]
     return trip
 
 def add_request(user, trip, hasCar=False, passengers=None, cost=None, reqAccepted=None):
