@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from TripShare.models import User,UserProfile
 from TripShare.models import Trip
+from django.template.defaultfilters import slugify
 
 class TripForm(forms.ModelForm):
     desc = forms.CharField(max_length=255,help_text="Please enter the description of your trip.")
