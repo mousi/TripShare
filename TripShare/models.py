@@ -28,7 +28,10 @@ class Trip(models.Model):
     #passenger_number
     pass_num = models.IntegerField(null=True)
     cost = models.FloatField(null=True, blank=True)
-    datetime = models.DateTimeField()
+    #Date when trip starts
+    tripdate = models.DateTimeField()
+    #Date the trip is posted
+    dateposted = models.DateTimeField()
 
     carOwner = models.ForeignKey(UserProfile, related_name='carOwner', null=True)
 
