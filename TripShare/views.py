@@ -103,3 +103,6 @@ def register(request):
 	
 def post(request):
     return render(request, 'post.html', {})
+
+def auth_logout(request):
+    return render(request, 'about.html')
