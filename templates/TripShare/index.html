@@ -8,7 +8,7 @@
 {% if user.is_authenticated %}
 <div class="page-header">
 
-            <h1 style="text-align: center" >Tripshare says... hello {{ user.username }}!</h1>
+            <h1 style="text-align: center" >Hello, {{ user.username }}!</h1>
             {% else %}
             <h1 style="text-align: center" >Tripshare says... Grapsou re malakiasmeno!</h1>
 
@@ -24,10 +24,9 @@
             {% for tr in trips %}
 			<div class="col-xs-12 col-sm-10 col-md-12">
 				<div class="thumbnail">
-					<img src="..." alt="...">
 						<div class="caption">
 							<h2><b>{{ tr.source }} : {{ tr.destination }}</b></h2>
-								<p><b>Created by:</b> {{ tr.creator }}.</p>
+								<p><b>Created by:</b> {{ tr.creator }}</p>
                                 <p><b>Description: </b> {{ tr.desc }}</p>
 
 								<p><a href="#" class="btn btn-primary" role="button">Join Trip!</a> <a href="#" class="btn btn-default" role="button">View Details</a></p>

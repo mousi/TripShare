@@ -10,10 +10,11 @@ def index(request):
     trips_list = Trip.objects.all()
     request_list = Request.objects.all()
     context_dict = {'trips':trips_list,'requests':request_list}
-    return render(request, 'index.html', context_dict)
+
+    return render(request, 'TripShare/index.html', context_dict)
 
 def about(request):
-    return render(request, 'about.html', {})
+    return render(request, 'TripShare/about.html', {})
 
 def addTrip(request):
 
@@ -30,13 +31,13 @@ def addTrip(request):
 
         form = TripForm()
 
-    return render(request, 'post.html', {'form' : form})
+    return render(request, 'TripShare/post.html', {'form' : form})
 
 
 
 def test(request):
     context_dict = {}
-    return render(request, 'test.html', context_dict)
+    return render(request, 'TripShare/test.html', context_dict)
 
 def user_login(request):
     print request.method
@@ -61,11 +62,10 @@ def user_login(request):
                 return HttpResponse("Your account now is disabled.")
         else:
 
-            print "Invalid login details, {0}, {1}".format(username,password)
-            return HttpResponse("Invalid login details supplied.")
+            return HttpResponseRedirect('/TripShare/')
     else:
 
-        return render(request, 'index.html', {})
+        return render(request, 'TripShare/index.html', {})
 
 
 def register(request):
@@ -99,12 +99,12 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered' : registered})
+    return render(request, 'TripShare/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered' : registered})
 	
 def post(request):
-    return render(request, 'post.html', {})
+    return render(request, 'TripShare/post.html', {})
 
 def auth_logout(request):
 
     logout(request)
-    return HttpResponseRedirect('http://127.0.0.1:8000/TripShare/')
+    return HttpResponseRedirect('TripShare/index.html')
