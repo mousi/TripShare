@@ -47,6 +47,7 @@ def populate():
              source="Glasgow",
              destination="London",
              pass_num=3,
+             cost=50,
              datetime=datetime.datetime(2015,4,1,10,0,0),
              carOwner=user_mousi)
     trip2=add_trip(description="Looking for someone with a car to travel to Manchester from Aberdeen",
@@ -60,8 +61,17 @@ def populate():
                    creator=user_geo,
                    source="Birmingham",
                    destination="Newcastle",
+                   pass_num=10,
                    datetime=datetime.datetime(2015,5,1,12,0,0))
 
+    trip4=add_trip(description="Going from Glasgow to Dundee",
+                   creator=user_jenny,
+                   source="Glasgow",
+                   destination="Dundee",
+                   pass_num=5,
+                   cost=30,
+                   datetime=datetime.datetime(2015,5,13,13,30,0)
+                   )
     # Add some requests
     add_request(user=user_thanos, trip=trip1)
     add_request(user=user_geo, trip=trip1)

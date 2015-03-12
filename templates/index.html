@@ -11,7 +11,9 @@
             <h1>Tripshare says... hello {{ user.username }}!</h1>
             {% else %}
             <h1>Tripshare says... Grapsou re malakiasmeno!</h1>
+
             {% endif %}
+
 </div>
 
     <div class="row placeholders">
@@ -19,40 +21,45 @@
 	<div class="container">
       <!-- Example row of columns -->  
 		<div class="row">
+            {% for tr in trips %}
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
 					<img src="..." alt="...">
 						<div class="caption">
-							<h3>Thumbnail label</h3>
-								<p>...</p>
-								<p><a href="#" class="btn btn-primary" role="button">Button1</a> <a href="#" class="btn btn-default" role="button">Button2</a></p>
-						</div>
+							<h2><b>{{ tr.source }} : {{ tr.destination }}</b></h2>
+								<p><b>Created by:</b> {{ tr.creator }}.</p>
+                                <p><b>Description: </b> {{ tr.desc }}</p>
+
+								<p><a href="#" class="btn btn-primary" role="button">Join Trip!</a> <a href="#" class="btn btn-default" role="button">View Details</a></p>
+
+                            <div class="table">
+
+								<table border="0" style="width:100%">
+								{%  if tr.cost != Null %}
+                                  <tr>
+									<td>Cost:</td>
+									<td>{{ tr.cost }}</td>
+								  </tr>
+                                {% endif %}
+								  <tr>
+									<td>Passengers: </td>
+									<td>{{ tr.pass_num }}</td>
+								  </tr>
+								  <tr>
+									<td>Date</td>
+									<td>12/2/2016</td>
+								  </tr>
+                                <tr>
+									<td>Date</td>
+									<td>{{ tr.datetime }}</td>
+								  </tr>
+								</table>
+
+								</div>
+                        </div>
 				</div>
 			</div>
 
-			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail">
-					<img src="..." alt="...">
-						<div class="caption">
-							<h3>Thumbnail label</h3>
-								<p>...</p>
-								<p><a href="#" class="btn btn-primary" role="button">Button1</a> <a href="#" class="btn btn-default" role="button">Button2</a></p>
-						</div>
-				</div>
-			</div>
 
-			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail">
-					<img src="..." alt="...">
-						<div class="caption">
-							<h3>Thumbnail label</h3>
-								<p>...</p>
-								<p><a href="#" class="btn btn-primary" role="button">Button1</a> <a href="#" class="btn btn-default" role="button">Button2</a></p>
-						</div>
-				</div>
-			</div>
-		</div>
-
-
-   <!-- <p> visits: {{ visits }}</p> -->
+            {% endfor %}
         {% endblock %}
