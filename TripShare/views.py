@@ -108,3 +108,6 @@ def auth_logout(request):
 
     logout(request)
     return HttpResponseRedirect('/TripShare/')
+	
+def view_profile(request):
+    return render(request, 'TripShare/viewprofile.html', {})

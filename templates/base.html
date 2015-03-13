@@ -30,6 +30,8 @@
 
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'post' %}">Post Trip</a></li>
+						<li><a href="{% url 'view_profile' %}">View Profile</a></li>
+						
                         <li><a href="{% url 'auth_logout' %}?next={% url 'index' %}">Logout</a></li>
                     {% else %}
 						<form class="navbar-form navbar-right" id="login_form" method="post" action="{% url 'login' %}">
