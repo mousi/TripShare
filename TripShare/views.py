@@ -28,7 +28,6 @@ def addTrip(request):
         else:
             print form.errors
     else:
-
         form = TripForm()
 
     return render(request, 'TripShare/post.html', {'form' : form})

@@ -13,8 +13,8 @@ class TripForm(forms.ModelForm):
     pass_num = forms.IntegerField(help_text="Enter the number of participants of trip")
 
     class Meta:
-
         model = Trip
+        exclude = ('')
 
 
 

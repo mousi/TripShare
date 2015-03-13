@@ -10,78 +10,14 @@
 
 <div class="container">
 
-      <form class="form-signin">
-        <h4 class="form-signin-heading" style="color:green; text-align: center;">Please Provide the following information</h4>
-		
-		<br>
-		<p>From</p>
-        <label for="inputEmail" class="sr-only">From</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="From" required autofocus>
-		
-		<br>
-		
-		<!-- Single button -->
-		<div class="btn-group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Action <span class="caret"></span></button>
-			<ul class="dropdown-menu" role="menu">
-			<li><a href="#">Action</a></li>
-			<li><a href="#">Another action</a></li>
-			<li><a href="#">Something else here</a></li>
-			<li class="divider"></li>
-			<li><a href="#">Separated link</a></li>
-			</ul>
-		</div>
-		
-		<br>
-		<br>
-		
-		<select>
-			<option value="London">London</option>
-			<option value="glasgow">Glasgow</option>
-			<option value="manchester">Manchester</option>
-		</select>
-		
-		<br>
-		<br>
-		<p>To</p>
-		<label for="inputPassword" class="sr-only">To</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="To" required>
-		
-		<br>
-		<p>No of Persons</p>
-		<label for="inputPassword" class="sr-only">No of Persons</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="No of Persons" required>
-		
-		<br>
-		<p>Cost</p>
-		<label for="inputPassword" class="sr-only">Optional</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Optional" required>
-		
-		<br>
-		<p>Description</p>
-		<label for="inputPassword" class="sr-only">Description</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Optional" required>
-		
-		<br>
+    <form id="post_trip" method="post" action="{% url 'post' %}"
+                enctype="multipart/form-data">
 
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> I Own a Car
-          </label>
-		  <label style ="padding-left:5em;">
-            <input type="checkbox" value="remember-me"> I will travel along
-          </label>
-        </div>
-		
-		<div class="btn-group">
-		 <label style ="padding-left:31em;">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit Trip!</button>
-		 </label>
-		  <label style ="padding-left:5em;">
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Cancel</button>
-		</label>
-		</div>
-      </form>
+    <!--<form class="form-signin">-->
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+    </form>
 
     </div>
 
