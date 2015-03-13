@@ -65,7 +65,6 @@ def addTrip(request):
         else:
             print form.errors
     else:
-
         form = TripForm()
 
     return render(request, 'TripShare/post.html', {'form' : form})
@@ -166,4 +165,4 @@ def view_profile(request):
     content_dict={'created_list':created_list, 'joined_list':joined_trips}
 
     return render(request, 'TripShare/viewprofile.html', content_dict)
-	
+
