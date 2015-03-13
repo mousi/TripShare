@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 
 {% extends 'base.html' %}
 
 {% load staticfiles %}
 
-{% block title %}View My Profile{% endblock %}
+{% block title %}My Profile{% endblock %}
 
 {% block body_block %}
 
@@ -15,8 +14,8 @@
 				<div class="thumbnail">
 						<div class="caption">
 						
-							<h2><b><img src="http://images4.fanpop.com/image/photos/21600000/toxic-toxic-21660071-150-150.gif" alt="HTML tutorial" style="width:42px;height:42px;border:0"> {{user.first_name}} {{user.last_name}}</b></h2>
-							<div class="row placeholders" style="text-align: center;">
+							<h2><b><img src="/media/avatars/toxic-toxic-21660071-150-150.gif" alt="User avatar" height="100" width="100" /> {{user.first_name}} {{user.last_name}}</b></h2>
+							<div class="row placeholders">
 							<p><b> Username : </b> {{user.username}}<p>
 							<p><b> Age : </b> Place the age here</p>
 							<p><b> Last Seen On : </b> Place the date here</p>
@@ -26,28 +25,27 @@
 							<div class="table">
 								<table border="0" style="width:100%">
                                   <tr>
-								<td><b>Latest Trips (Joined or Created)<b></td>
-							  </tr>
-							  <tr>
-								<td>Glasgow : London</td>
-							  </tr>
-							  <tr>
-								<td>London : Southampton</td>
-							  </tr>
-							 <tr>
-								<td>Southampton : Liverpool</td>
-							  </tr>
-							  <tr>
-								<td>Liverpool : Edinburgh</td>
-							  </tr>	
-							  <tr>
-								<td>Edinburgh : Glasgow </td>
-							  </tr>							  
+								    <td><b>Latest Trips Created</b></td>
+							      </tr>
+                                  {% for trips in created_list %}
+                                     <tr>
+                                        <td>{{ trips.source }} : {{ trips.destination }}</td>
+                                     </tr>
+
+                                  {% endfor %}
+
+                                   <tr>
+								    <td><b>Latest Trips Joined</b></td>
+							       </tr>
+                                    {% for trip in joined_list %}
+                                     <tr>
+                                        <td>{{ trip.source }} : {{ trip.destination }}</td>
+                                     </tr>
+
+                                  {% endfor %}
 								</table>
 
 								</div>
-							
-						
                         </div>
 				</div>
 			</div>
