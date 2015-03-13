@@ -11,12 +11,10 @@ class TripForm(forms.ModelForm):
     tripdate = forms.DateTimeField(help_text="Please enter the date you want to start the trip")
     cost = forms.FloatField(help_text="Enter the approximate cost of the trip")
     pass_num = forms.IntegerField(help_text="Enter the number of participants of trip")
-
+    #dateposted = forms.DateTimeField(help_text = "Date trip posted", widget = forms.HiddenInput(), required = False)
     class Meta:
         model = Trip
-        exclude = ('')
-
-
+        exclude = ('creator','dateposted',)
 
 class UserForm(forms.ModelForm):
 
