@@ -3,12 +3,12 @@ from TripShare.models import Trip, TripUser, Request
 from TripShare.forms import UserForm,UserProfileForm,TripForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
+import datetime
 
 import os
 
 # Create your views here.
 def index(request):
-
     trips_list = Trip.objects.all()
     request_list = Request.objects.all()
     context_dict = {'trips':trips_list,'requests':request_list}
@@ -21,11 +21,22 @@ def about(request):
 def addTrip(request):
 
     if request.method == 'POST':
+
         form = TripForm(request.POST)
 
-        if form.is_valid():
-            form.save(commit = True)
+        form.dateposted = datetime.datetime.now()
 
+        if form.is_valid():
+
+            trip = form.save(commit = False)
+            print request.user.id
+            trip.creator = request.user
+
+            trip.dateposted = datetime.datetime.now()
+
+            trip.save()
+
+            #TODO: render to viewTrip
             return index(request)
         else:
             print form.errors
