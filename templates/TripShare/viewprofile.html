@@ -10,20 +10,50 @@
 
 <div class="container">
 
-<h1 style="text-align: center">Here are some information regarding your profile</h1>
+<div class="row">
+			<div class="col-xs-12 col-sm-10 col-md-12">
+				<div class="thumbnail">
+						<div class="caption">
+						
+							<h2><b><img src="http://images4.fanpop.com/image/photos/21600000/toxic-toxic-21660071-150-150.gif" alt="HTML tutorial" style="width:42px;height:42px;border:0"> {{user.first_name}} {{user.last_name}}</b></h2>
+							<div class="row placeholders" style="text-align: center;">
+							<p><b> Username : </b> {{user.username}}<p>
+							<p><b> Age : </b> Place the age here</p>
+							<p><b> Last Seen On : </b> Place the date here</p>
 
-<h2>Avatar</h2>
+							<h2> Trip Details </h2>
+							
+							<div class="table">
+								<table border="0" style="width:100%">
+                                  <tr>
+								<td><b>Latest Trips (Joined or Created)<b></td>
+							  </tr>
+							  <tr>
+								<td>Glasgow : London</td>
+							  </tr>
+							  <tr>
+								<td>London : Southampton</td>
+							  </tr>
+							 <tr>
+								<td>Southampton : Liverpool</td>
+							  </tr>
+							  <tr>
+								<td>Liverpool : Edinburgh</td>
+							  </tr>	
+							  <tr>
+								<td>Edinburgh : Glasgow </td>
+							  </tr>							  
+								</table>
 
-<p> <strong>Name:</strong> {{user.first_name}} {{user.last_name}}</p>
+								</div>
+							
+						
+                        </div>
+				</div>
+			</div>
+			</div>
 
-<p> <strong>UserName:</strong> {{ user.username }} </p>
-
-<p> Most Visited Places </p>
-
-<p> Favorite User to travell with </p>
-
-<p> Last Seen on </p>
-
+</div>
 </div>
 
 {% endblock %}

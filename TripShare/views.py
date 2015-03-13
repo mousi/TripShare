@@ -4,6 +4,8 @@ from TripShare.forms import UserForm,UserProfileForm,TripForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 
+import os
+
 # Create your views here.
 def index(request):
 
@@ -111,3 +113,4 @@ def auth_logout(request):
 	
 def view_profile(request):
     return render(request, 'TripShare/viewprofile.html', {})
+	
