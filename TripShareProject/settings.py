@@ -101,9 +101,6 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_URL = '/media/'
-<<<<<<< HEAD
 
-=======
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Absolute path to the media directory
->>>>>>> a01fc9e355bccb7fdc4bcf6ed47d4032e65d3393
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
