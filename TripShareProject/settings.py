@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jquery',
     'TripShare',
     'registration',
     'bootstrap_toolkit',
@@ -103,5 +104,4 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Absolute path to the media directory
 MEDIA_URL = '/media/'
-
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

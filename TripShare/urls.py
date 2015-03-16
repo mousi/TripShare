@@ -10,5 +10,4 @@ urlpatterns = patterns('',
 	url(r'^post/$', views.addTrip, name='post'),
     url(r'^logout/$', views.auth_logout, name='auth_logout'),
 	url(r'^view/(?P<username>[\w\-]+)/$', views.view_profile, name='view_profile'),
-
     )
