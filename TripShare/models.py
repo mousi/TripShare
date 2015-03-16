@@ -12,6 +12,9 @@ class UserProfile(models.Model):
     isDriver = models.BooleanField(default=False)
     # Avatar (image)
     avatar = models.ImageField(upload_to='avatars', blank=True)
+    # Date of birth
+    dob = models.DateField()
+
 
     def __unicode__(self):
         return self.user.username
@@ -32,7 +35,8 @@ class Trip(models.Model):
     #Date when trip starts
     tripdate = models.DateTimeField()
     #Date the trip is posted
-    dateposted = models.DateTimeField(default= datetime.datetime.now())
+    dateposted = models.DateTimeField(auto_now=True)
+    #dateposted = models.DateTimeField(default= datetime.datetime.now())
 
     def __unicode__(self):
         return self.desc
@@ -42,7 +46,6 @@ class Rating(models.Model):
     userRater = models.ForeignKey(User, related_name='rating_user')
     userRated = models.ForeignKey(User, related_name='rated_user')
     rating = models.IntegerField()
-    comments = models.CharField(max_length=255, blank=True)
 
     class Meta:
         unique_together = ('userRater', 'userRated')

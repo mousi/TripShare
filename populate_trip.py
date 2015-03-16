@@ -17,7 +17,8 @@ def populate():
                                  first_name="Kostas",
                                  last_name="K",
                                  email="dummy_email@tripshare.co.uk",
-                                 avatar="avatars/rango.jpg")
+                                 avatar="avatars/rango.jpg",
+                                 dob=datetime.date(1984,5,21))
 
     user_liverpoolaras = add_userProfile(username="liverpoolaras",
              password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
@@ -25,21 +26,26 @@ def populate():
              avatar="avatars/gavros.jpg",
              email="dummy_email2@tripshare.co.uk",
              first_name="Vag",
-             last_name="Karv")
+             last_name="Karv",
+             dob=datetime.date(1999,5,19))
     user_geo = add_userProfile(username="geo",
              password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
              first_name="Geo",
-             last_name="Gv")
+             last_name="Gv",
+             dob=datetime.date(1994,5,4))
     user_thanos = add_userProfile(username="thanos",
              password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
              first_name="Thanos",
              last_name="S",
-             email="dummy_email3@tripshare.co.uk")
+             email="dummy_email3@tripshare.co.uk",
+             dob=datetime.date(1994,3,4))
     user_jenny = add_userProfile(username="jenny",
              password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
-             isDriver=True)
+             isDriver=True,
+             dob=datetime.date(1998,12,1))
     user_molester = add_userProfile(username="molester",
-             password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=")
+             password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
+             dob=datetime.date(1966,2,9))
 
     # Add some trips
     trip1=add_trip(description="A road trip from Glasgow to London. We will stop in Liverpool to see THE TEAM!",
@@ -86,8 +92,8 @@ def populate():
     add_user_trip(user=user_jenny, trip=trip1)
 
     # Add some ratings
-    add_rating(user_jenny, user_molester, 5, "Very good guy. Had loads of fun in our last trip! ;)")
-    add_rating(user_thanos, user_liverpoolaras, 1, "Really boring guy... Was sleeping during the entire trip!")
+    add_rating(user_jenny, user_molester, 5)
+    add_rating(user_thanos, user_liverpoolaras, 1)
 
 
 def add_trip(description, creator, source, destination, pass_num, tripdate, dateposted, cost=None):
@@ -102,13 +108,13 @@ def add_user_trip(user, trip):
     ut=TripUser.objects.get_or_create(user=user,trip=trip)[0]
     return ut
 
-def add_rating(userRater, userRated, rating, comments=""):
-    r=Rating.objects.get_or_create(userRater=userRater, userRated=userRated, rating=rating, comments=comments)[0]
+def add_rating(userRater, userRated, rating):
+    r=Rating.objects.get_or_create(userRater=userRater, userRated=userRated, rating=rating)[0]
     return r
 
-def add_userProfile(username, password, isDriver=False, avatar="", email="", first_name="",last_name=""):
+def add_userProfile(username, password, dob, isDriver=False, avatar="", email="", first_name="",last_name=""):
     user = add_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
-    up = UserProfile.objects.get_or_create(user=user, isDriver=isDriver, avatar=avatar)[0]
+    up = UserProfile.objects.get_or_create(user=user, isDriver=isDriver, avatar=avatar, dob=dob)[0]
     return user
 
 def add_user(username, password, email, first_name, last_name):

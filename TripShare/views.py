@@ -72,7 +72,7 @@ def addTrip(request):
 
         form = TripForm(request.POST)
 
-        form.dateposted = datetime.datetime.now()
+        #form.dateposted = datetime.datetime.now()
 
         if form.is_valid():
 
@@ -80,11 +80,10 @@ def addTrip(request):
 
             trip.creator = request.user
 
-            trip.dateposted = datetime.datetime.now()
+            #trip.dateposted = datetime.datetime.now()
 
             trip.save()
 
-            #TODO: render to viewTrip
             return index(request)
         else:
             print form.errors
@@ -135,7 +134,6 @@ def register(request):
 
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
-
 
         if(user_form.is_valid() and profile_form.is_valid()):
             user = user_form.save()

@@ -1,8 +1,7 @@
 from django import forms
-from django.contrib.auth.models import User
 from TripShare.models import User,UserProfile
 from TripShare.models import Trip
-from django.template.defaultfilters import slugify
+from django.contrib.auth.forms import UserCreationForm
 
 class TripForm(forms.ModelForm):
     desc = forms.CharField(max_length=255,help_text="Please enter the description of your trip.")
@@ -16,15 +15,20 @@ class TripForm(forms.ModelForm):
         model = Trip
         exclude = ('creator','dateposted',)
 
-class UserForm(forms.ModelForm):
+class UserForm(UserCreationForm):
 
-    password = forms.CharField(widget = forms.PasswordInput())
+    email = forms.EmailField(required = True)
+    first_name = forms.CharField(required = True)
+    last_name = forms.CharField(required = True)
+
+    #password = forms.CharField(widget = forms.PasswordInput,label="Password")
+    #password2 = forms.CharField(widget = forms.PasswordInput,label="Password (again)")
 
     class Meta:
         model = User
-        fields = ('username','password')
+        fields = ('first_name','last_name','username','email','password1','password2')
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('isDriver','avatar')
+        fields = ('dob','isDriver','avatar')
