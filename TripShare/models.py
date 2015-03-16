@@ -11,7 +11,7 @@ class UserProfile(models.Model):
     # Is this user a driver?
     isDriver = models.BooleanField(default=False)
     # Avatar (image)
-    avatar = models.ImageField(upload_to='avatars', blank=True)
+    avatar = models.ImageField(upload_to='avatars/', default = 'avatars/rango.jpg')
     # Date of birth
     dob = models.DateField()
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from TripShare.models import Trip, TripUser, Request, User
+from TripShare.models import Trip, TripUser, Request, User, UserProfile
 from TripShare.forms import UserForm,UserProfileForm,TripForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -7,13 +7,10 @@ import datetime
 
 import os
 
-# Create your views here.
 def index(request):
-
-
     trips_list = Trip.objects.all()
     request_list = Request.objects.all()
-    context_dict = {'trips':trips_list,'requests':request_list}
+    context_dict = {'trips':trips_list, 'requests':request_list}
     visits = request.session.get('visits')
 
     if not visits:
@@ -36,9 +33,10 @@ def index(request):
     if reset_last_visit_time:
         request.session['last_visit'] = str(datetime.datetime.now())
         request.session['visits'] = visits
-    context_dict['visits'] = visits
 
+    context_dict['visits'] = visits
     visits = request.session.get('visits')
+
     if not visits:
         visits = 1
     reset_last_visit_time = False
@@ -72,15 +70,11 @@ def addTrip(request):
 
         form = TripForm(request.POST)
 
-        #form.dateposted = datetime.datetime.now()
-
         if form.is_valid():
 
             trip = form.save(commit = False)
 
             trip.creator = request.user
-
-            #trip.dateposted = datetime.datetime.now()
 
             trip.save()
 
@@ -115,15 +109,11 @@ def user_login(request):
                 login(request,user)
                 return HttpResponseRedirect('/TripShare/')
             else:
-
                 return HttpResponse("Your account now is disabled.")
         else:
-
             return HttpResponseRedirect('/TripShare/')
     else:
-
         return render(request, 'TripShare/index.html', {})
-
 
 def register(request):
 
@@ -131,17 +121,16 @@ def register(request):
 
     if request.method == 'POST':
 
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
+        user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST, request.FILES)
 
         if user_form.is_valid() and profile_form.is_valid():
+
             user = user_form.save()
 
             profile = profile_form.save(commit=False)
-            profile.user = user
 
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+            profile.user = user
 
             profile.save()
             registered = True
@@ -152,18 +141,17 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    dict = {}
-    dict['user_form'] = user_form
-    dict['profile_form'] = profile_form
-    dict['registered']= registered
+    context_dict = {}
+    context_dict['user_form'] = user_form
+    context_dict['profile_form'] = profile_form
+    context_dict['registered']= registered
 
-    return render(request, 'TripShare/register.html', dict)
+    return render(request, 'TripShare/register.html', context_dict)
 
 def post(request):
     return render(request, 'TripShare/post.html', {})
 
 def auth_logout(request):
-
     logout(request)
     return HttpResponseRedirect('/TripShare/')
 
@@ -187,7 +175,7 @@ def view_profile(request, username):
         created_list = None
         joined_list = None
 
-    content_dict={'created_list':created_list, 'joined_list':joined_list}
+    context_dict={'created_list':created_list, 'joined_list':joined_list}
 
-    return render(request, 'TripShare/viewprofile.html', content_dict)
+    return render(request, 'TripShare/viewprofile.html', context_dict)
 
