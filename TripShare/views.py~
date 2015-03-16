@@ -10,7 +10,11 @@ import os
 # Create your views here.
 def index(request):
 
+<<<<<<< HEAD
+    request.session.set_test_cookie()
 
+=======
+>>>>>>> a01fc9e355bccb7fdc4bcf6ed47d4032e65d3393
     trips_list = Trip.objects.all()
     request_list = Request.objects.all()
     context_dict = {'trips':trips_list,'requests':request_list}
