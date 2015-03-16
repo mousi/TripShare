@@ -159,8 +159,9 @@ def auth_logout(request):
 def view_profile(request, username):
 
     user = User.objects.get(username=username)
+    profile = UserProfile.objects.get(user=user)
     try:
-        joined_trips = []
+        joined_trips =[]
 
         created_list = Trip.objects.filter(creator=user)
 
@@ -173,7 +174,7 @@ def view_profile(request, username):
 
     except Trip.DoesNotExist:
         created_list = None
-        joined_list = None
+        joined_trips = None
 
     context_dict={'created_list':created_list, 'joined_list':joined_list}
 

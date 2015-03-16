@@ -14,11 +14,11 @@
 				<div class="thumbnail">
 						<div class="caption">
 						
-							<h2><b><img src="/media/avatars/toxic-toxic-21660071-150-150.gif" alt="User avatar" height="100" width="100" /> {{user.first_name}} {{user.last_name}}</b></h2>
+							<h2><b><img src="/media/{{ user_profile.avatar }}" alt="" height="200" width="200" /> {{user_viewed.first_name}} {{user_viewed.last_name}}</b></h2>
 							<div class="row placeholders">
-							<p><b> Username: </b> {{user.username}}<p>
+							<p><b> Username: </b> {{ user_viewed.username }}<p>
 							<p><b> Age: </b> Place the age here</p>
-							<p><b> Last Seen On: </b> Place the date here</p>
+							<p><b> Last Seen On: </b> {{ user_viewed.last_login }}</p>
 
 							<h2> Trip Details </h2>
 							
