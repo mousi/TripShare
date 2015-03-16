@@ -63,8 +63,15 @@
 
 								</div>
                         </div>
+                {% if user.is_authenticated %}
+        <button id="likes" data-creatorid="{{ tr.creator }}" data-tripid="{{ tr.id }}" class="btn btn-primary" type="button">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        Rate
+        </button>
+{% endif %}
 				</div>
 			</div>
+
             {% endfor %}
 			</div>
         {% endblock %}

@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from TripShare.models import Trip, TripUser, Request, User, UserProfile
-from TripShare.forms import UserForm,UserProfileForm,TripForm
+from TripShare.models import *
+from TripShare.forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 import datetime
+from django.contrib.auth.decorators import login_required
 
 import os
 
@@ -178,4 +179,3 @@ def view_profile(request, username):
     context_dict={'created_list':created_list, 'joined_list':joined_trips, 'user_viewed':user, 'user_profile':profile}
 
     return render(request, 'TripShare/viewprofile.html', context_dict)
-
