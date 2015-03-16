@@ -112,7 +112,7 @@ def add_rating(userRater, userRated, rating):
     r=Rating.objects.get_or_create(userRater=userRater, userRated=userRated, rating=rating)[0]
     return r
 
-def add_userProfile(username, password, dob, isDriver=False, avatar=None, email="", first_name="",last_name=""):
+def add_userProfile(username, password, dob, isDriver=False, avatar="avatars/default.jpg", email="", first_name="",last_name=""):
     user = add_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
     up = UserProfile.objects.get_or_create(user=user, isDriver=isDriver, avatar=avatar, dob=dob)[0]
     return user
