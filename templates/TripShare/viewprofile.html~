@@ -19,7 +19,7 @@
 						
 							<h2><b><img src="/media/avatars/toxic-toxic-21660071-150-150.gif" alt="User avatar" height="100" width="100" /> {{user.first_name}} {{user.last_name}}</b></h2>
 
-							<input id="input-21e" value="0" type="number" class="rating" min=0 max=5 step=1 data-size="xs" >
+							<input id="input-21e" value="0" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
 							<hr>
 							<div class="row placeholders">
 							<h2><b> Username : </b> {{user.username}}</h2>
