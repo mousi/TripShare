@@ -26,7 +26,13 @@
 				<div class="thumbnail">
 						<div class="caption">
 							<h2><b>{{ tr.source }} : {{ tr.destination }}</b></h2>
-								<p><b>Created by:</b> {{ tr.creator }}</p>
+								<p><b>Created by:</b>
+                                    {% if user.is_authenticated %}
+                                    <a href="{% url 'view_profile' tr.creator %}"> {{ tr.creator }}</a>
+                                    {% else %}
+                                    {{ tr.creator }}
+                                    {% endif %}
+                                    </p>
                                 <p><b>Description: </b> {{ tr.desc }}</p>
 
 								<p><a href="#" class="btn btn-primary" role="button">Join Trip!</a> <a href="#" class="btn btn-default" role="button">View Details</a></p>

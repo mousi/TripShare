@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from TripShare.models import Trip, TripUser, Request
+from TripShare.models import Trip, TripUser, Request, User
 from TripShare.forms import UserForm,UserProfileForm,TripForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -129,16 +129,13 @@ def register(request):
 
     registered = False
 
-    print request.method
     if request.method == 'POST':
 
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
 
-        if(user_form.is_valid() and profile_form.is_valid()):
+        if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-            user.set_password(user.password)
-            user.save()
 
             profile = profile_form.save(commit=False)
             profile.user = user
@@ -155,7 +152,12 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'TripShare/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered' : registered})
+    dict = {}
+    dict['user_form'] = user_form
+    dict['profile_form'] = profile_form
+    dict['registered']= registered
+
+    return render(request, 'TripShare/register.html', dict)
 
 def post(request):
     return render(request, 'TripShare/post.html', {})
@@ -166,15 +168,16 @@ def auth_logout(request):
     return HttpResponseRedirect('/TripShare/')
 
 
-def view_profile(request):
+def view_profile(request, username):
 
+    user = User.objects.get(username=username)
     try:
         joined_trips = []
 
-        created_list = Trip.objects.filter(creator=request.user)
+        created_list = Trip.objects.filter(creator=user)
 
         #Returns a list of dictionaries
-        joined_list = TripUser.objects.filter(user=request.user)
+        joined_list = TripUser.objects.filter(user=user)
 
         for d in joined_list:
             joined_trips.append(d.trip)
@@ -184,7 +187,7 @@ def view_profile(request):
         created_list = None
         joined_list = None
 
-    content_dict={'created_list':created_list, 'joined_list':joined_trips}
+    content_dict={'created_list':created_list, 'joined_list':joined_list}
 
     return render(request, 'TripShare/viewprofile.html', content_dict)
 
