@@ -171,12 +171,11 @@ def view_profile(request, username):
         for d in joined_list:
             joined_trips.append(d.trip)
 
-
     except Trip.DoesNotExist:
         created_list = None
         joined_trips = None
 
-    context_dict={'created_list':created_list, 'joined_list':joined_list}
+    context_dict={'created_list':created_list, 'joined_list':joined_trips, 'user_viewed':user, 'user_profile':profile}
 
     return render(request, 'TripShare/viewprofile.html', context_dict)
 
