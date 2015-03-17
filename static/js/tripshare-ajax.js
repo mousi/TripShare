@@ -10,7 +10,7 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
             },
             success: function(response){
-                alert("KOKOKO");
+
             },
             error: function(rs, e) {
                        alert(rs.responseText);
