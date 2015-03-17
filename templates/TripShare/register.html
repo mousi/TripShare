@@ -25,8 +25,11 @@
                  <!-- Display each form. The as_p method wraps each element in a paragraph
                  (<p>) element. This ensures each element appears on a new line,
                  making everything look neater. -->
-                {{ user_form.as_p }}
-                {{ profile_form.as_p }}
+
+                <table>
+                    {{ user_form.as_table }}
+                    {{ profile_form.as_table }}
+                </table>
 
                  <!-- Provide a button to click to submit the form. -->
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>

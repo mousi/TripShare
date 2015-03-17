@@ -14,7 +14,6 @@ $(document).ready(function() {
                 $button.removeClass("btn-primary");
                 $button.addClass("btn-success");
                 $button.text("Request Successful");
-                //alert("KOKOKO");
             },
             error: function(rs, e) {
                 $button.removeClass("btn-primary");
