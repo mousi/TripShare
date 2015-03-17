@@ -1,33 +1,25 @@
 {% extends 'base.html' %}
-
 {% load staticfiles %}
-
 {% block title %}Login{% endblock %}
-
 {% block body_block %}
-
     <h1 style="color:blue; text-align: center;">Post A Trip</h1>
-
     <div class="container">
-
-        <form class="form-signin" method="post">
-
-            {% csrf_token %}
-            <table class="form-signin">
-
-                {{ form.as_table }}
-
-            </table>
-            <div class="btn-group">
-                <label style ="padding-left:31em;">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit Trip!</button>
-                </label>
-                <label style ="padding-left:5em;">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Cancel</button>
-                </label>
-            </div>
-
+        <form class="form-signin btn btn-default" method="post" >
+            <h4 class="btn btn-default" style="color:green; text-al">Please Provide the following information</h4>
+            <form class="form-signin" method="post">
+                {% csrf_token %}
+                <table class="form-signin">
+                    {{ form.as_table }}
+                </table>
+                <div class="btn-group">
+                    <label style ="padding-left:31em;">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit Trip!</button>
+                    </label>
+                    <label style ="padding-left:5em;">
+                        <a href="{% url 'index' %}"> <button class="btn btn-lg btn-primary btn-block" type="button" id="cancel">Cancel</button></a>
+                    </label>
+                </div>
+            </form>
         </form>
-
     </div>
 {% endblock %}
