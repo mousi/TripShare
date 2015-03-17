@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 import datetime
 from django.contrib.auth.decorators import login_required
 from django.template import *
+
 import os
 from django.core.context_processors import csrf
 
@@ -206,4 +207,3 @@ def view_profile(request, username):
     context_dict={'created_list':created_list, 'joined_list':joined_trips, 'user_viewed':user, 'user_profile':profile}
 
     return render(request, 'TripShare/viewprofile.html', context_dict)
-
