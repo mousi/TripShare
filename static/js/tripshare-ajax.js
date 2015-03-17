@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     $(".join").click(function(){
+        $button = $(this)
         $.ajax({
             type:"POST",
             url:"join_trip/",
@@ -10,10 +11,16 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
             },
             success: function(response){
-                alert("KOKOKO");
+                $button.removeClass("btn-primary");
+                $button.addClass("btn-success");
+                $button.text("Request Successful");
+                //alert("KOKOKO");
             },
             error: function(rs, e) {
-                       alert(rs.responseText);
+                $button.removeClass("btn-primary");
+                $button.addClass("btn-danger");
+                $button.text("Error! Please reload");
+                       //alert(rs.responseText);
             }
         });
 

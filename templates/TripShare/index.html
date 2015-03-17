@@ -35,7 +35,8 @@
                                     </p>
                                 <p><b>Description: </b> {{ tr.desc }}</p>
                                     <p>
-                                        <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-mini btn-primary join" type="button">Join</button>
+                                        {% csrf_token %}
+                                        <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join" type="button">Join</button>
                                         <button class="btn btn-default detailsbtn" type="button">View Details</button>
                                     </p>
 
