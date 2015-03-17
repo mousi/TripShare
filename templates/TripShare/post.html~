@@ -25,7 +25,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit Trip!</button>
 		 </label>
 		  <label style ="padding-left:5em;">
-		<button class="btn btn-lg btn-primary btn-block" type="cancel">Cancel</button>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Cancel</button>
 		</label>
 		</div>
       </form>

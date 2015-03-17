@@ -1,0 +1,21 @@
+from django.shortcuts import render
+from TripShare.models import *
+from TripShare.forms import *
+from django.contrib.auth import *
+from django.http import HttpResponseRedirect, HttpResponse
+import datetime
+from django.contrib.auth.decorators import login_required
+from django.template import *
+
+import os
+from django.core.context_processors import csrf
+
+import unittest
+
+def about(request):
+    return render(request, 'TripShare/about.html', {})
+
+class MyTest(unittest.TestCase):
+    def test(self):
+        self.assertEqual(about(request), 'TripShare/about.html')
+
