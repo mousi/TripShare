@@ -35,8 +35,17 @@
                                     </p>
                                 <p><b>Description: </b> {{ tr.desc }}</p>
 
-								<p><a href="#" class="btn btn-primary" role="button">Join Trip!</a> <a href="#" class="btn btn-default" role="button">View Details</a></p>
+								<!--<p><a href="#" class="btn btn-primary" role="button">Join Trip!</a>
+                                    <a href="#" class="btn btn-default" role="button">View Details</a></p>-->
 
+                            <p>
+                                {% if user.is_authenticated %}
+                                    <form class="navbar-form navbar-right" id="join_form" method="post" action="{% url 'join_trip' %}">
+                                     {% csrf_token %}
+                                    <button id ="join" data-user="{{user.id}}" data-trip="{{tr.id}}" class="btn btn-mini btn-primary" type="button">Join</button>
+                                    </form>
+                                {% endif %}
+                            </p>
                             <div class="table">
 
 								<table border="0" style="width:100%">

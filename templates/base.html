@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-<script src="{% static "js/rango-jquery.js" %}"></script>
-<script src="{% static "js/star-rating.js"%}"></script>
 
 <html lang="en">
   <head>
@@ -14,6 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="{%static 'css/aris.jpg'%}">
+
 
     <title>{% block title %}Welcome to TripShare!{% endblock %}</title>
 
@@ -35,6 +32,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
                 <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
 
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'post' %}">Post Trip</a></li>
@@ -42,7 +40,8 @@
 						
                         <li><a href="{% url 'auth_logout' %}?next={% url 'index' %}">Logout</a></li>
                     {% else %}
-						<form class="navbar-form navbar-right" id="login_form" method="post" action="{% url 'login' %}">
+						<li>
+                            <form class="navbar-form navbar-right" id="login_form" method="post" action="{% url 'login' %}">
                         {% csrf_token %}
 						<div class="form-group">
 							<input type="text" name="username" placeholder="username" class="form-control" value="" size="20" />
@@ -58,9 +57,9 @@
                         </a>
 
 						</form>
+
+                        </li>
                     {% endif %}
-					
-				<li><a href="{% url 'about' %}">About</a></li> 
           </ul>
         </div>
       </div>
@@ -71,7 +70,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-2 main">
            <div>
                 {% block body_block %}{% endblock %}
-				
+
                 </div>
         </div>
       </div>
@@ -86,5 +85,9 @@
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script src="{% static 'js/rango-ajax.js' %}"></script>
   </body>
 </html>

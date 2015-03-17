@@ -80,6 +80,7 @@ def populate():
                    cost=30,
                    tripdate=datetime.datetime(2015,5,13,13,30,0),
                    dateposted = datetime.datetime(2015,4,2,12,0,0)
+				   )
     
     trip5=add_trip(description="Going from Dundee to Glasgow",
                    creator=user_geo,
@@ -88,8 +89,8 @@ def populate():
                    pass_num=4,
                    cost=15,
                    tripdate=datetime.datetime(2015,6,15,7,30,0),
-                   dateposted = datetime.datetime(2015,5,5,10,0,0)
-
+                   dateposted = datetime.datetime(2015,5,5,10,0,0))
+					
     trip6=add_trip(description="Going from Manchester to Glasgow",
                    creator=user_mousi,
                    source="Manchester",
@@ -97,18 +98,8 @@ def populate():
                    pass_num=12,
                    cost=18,
                    tripdate=datetime.datetime(2015,6,15,9,30,0),
-                   dateposted = datetime.datetime(2015,2,2,8,0,0)
-
-    trip7=add_trip(description="Going from Southampton to Glasgow",
-                   creator=user_liverpoolas,
-                   source="Southampton",
-                   destination="Glasgow",
-                   pass_num=2,
-                   cost=23,
-                   tripdate=datetime.datetime(2015,9,25,14,30,0),
-                   dateposted = datetime.datetime(2015,7,1,10,0,0)
-
-    )
+                   dateposted = datetime.datetime(2015,2,2,8,0,0))
+ 
     # Add some requests
     add_request(user=user_thanos, trip=trip1)
     add_request(user=user_geo, trip=trip1)
