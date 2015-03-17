@@ -3,8 +3,9 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<script src="{% static "js/rango-jquery.js" %}"></script>
-<script src="{% static "js/star-rating.js"%}"></script>
+<script src="{% static "js/tripshare-jquery.js" %}"></script>
+<script src="{% static "js/star-rating.js" %}"></script>
+
 
 <html lang="en">
   <head>
@@ -13,13 +14,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="{%static 'css/aris.jpg'%}">
+    <link rel="icon" href="{%static 'css/favicon.ico'%}">
 
     <title>{% block title %}Welcome to TripShare!{% endblock %}</title>
 
+    <link href="{%static 'css/tripshare.css'%}" rel="stylesheet">
     <link href="{%static 'css/star-rating.css'%}" rel="stylesheet">
     <link href="{%static 'css/dashboard.css'%}" rel="stylesheet">
-    <link rel="stylesheet"  href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 
   </head>
 
