@@ -37,7 +37,7 @@ def index(request):
     context_dict = {}
     context_dict.update(csrf(request))
 
-    trips_list = Trip.objects.all()
+    trips_list = Trip.objects.all().order_by('-dateposted')
     request_list = Request.objects.all()
     context_dict = {'trips': trips_list, 'requests': request_list}
     visits = request.session.get('visits')
