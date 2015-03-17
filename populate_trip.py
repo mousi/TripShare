@@ -30,6 +30,7 @@ def populate():
              dob=datetime.date(1999,5,19))
     user_geo = add_userProfile(username="geo",
              password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
+             avatar = "avatars/django_unchained.jpg",
              first_name="Geo",
              last_name="Gv",
              dob=datetime.date(1994,5,4))
