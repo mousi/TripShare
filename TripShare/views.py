@@ -12,25 +12,16 @@ from django.core.context_processors import csrf
 
 @login_required
 def join_trip(request):
-
+    #Checks if the request is POST
     if request.method == 'POST':
-
+        #Gets the user id and the trip id of the trip
         user_id = request.POST.get('user_id')
         trip_id = request.POST.get('trip_id')
-        userakos = User.objects.get(id=user_id)
-        #print userakos
-        tripaki = Trip.objects.get(id=trip_id)
-        #print tripaki
-        #print user_id
-        #print trip_id
-        #print user_id
-        #print requests
-        try:
-            #Ginetai kai me get_or_create
-            temp = Request.objects.get(user=userakos, trip=tripaki)
-        except:
-            Request.objects.create(user=userakos, trip=tripaki)
 
+        userakos = User.objects.get(id=user_id)
+        tripaki = Trip.objects.get(id=trip_id)
+
+        Request.objects.get_or_create(user=userakos, trip=tripaki)
     return render(request, 'TripShare/index.html', {})
 
 def index(request):
@@ -93,6 +84,7 @@ def index(request):
 def about(request):
     return render(request, 'TripShare/about.html', {})
 
+@login_required
 def addTrip(request):
 
     if request.method == 'POST':
@@ -177,6 +169,7 @@ def register(request):
 
     return render(request, 'TripShare/register.html', context_dict)
 
+@login_required
 def post(request):
     return render(request, 'TripShare/post.html', {})
 
@@ -184,7 +177,7 @@ def auth_logout(request):
     logout(request)
     return HttpResponseRedirect('/TripShare/')
 
-
+@login_required
 def view_profile(request, username):
 
     user = User.objects.get(username=username)
@@ -207,3 +200,7 @@ def view_profile(request, username):
     context_dict={'created_list':created_list, 'joined_list':joined_trips, 'user_viewed':user, 'user_profile':profile}
 
     return render(request, 'TripShare/viewprofile.html', context_dict)
+
+@login_required
+def edit_profile(request):
+    return HttpResponse("ante re malaka gamisou")

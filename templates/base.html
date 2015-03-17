@@ -3,9 +3,17 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<script src="{% static "js/tripshare-jquery.js" %}"></script>
-<script src="{% static "js/star-rating.js" %}"></script>
+<script src="{% static 'js/tripshare-jquery.js' %}"></script>
+<script src="{% static 'js/star-rating.js' %}"></script>
 <script src="{% static 'js/tripshare-ajax.js' %}"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+
+<link rel="stylesheet" type="text/css" href="{% static 'js/jquery.datetimepicker.css' %}" />
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.datetimepicker.js' %}"></script>
 
 <script>
     var crsf_token = {{ csrf_token }};
@@ -49,30 +57,31 @@
 
                 {% if user.is_authenticated %}
 
-                    <li><a href="{% url 'post' %}">Post Trip</a></li>
-                    <li><a href="{% url 'view_profile' user.username %}">View Profile</a></li>
-                    <li><a href="{% url 'auth_logout' %}?next={% url 'index' %}">Logout</a></li>
+                <li><a href="{% url 'post' %}">Post Trip</a></li>
+                <li><a href="{% url 'view_profile' user.username %}">View Profile</a></li>
+                <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+                <li><a href="{% url 'auth_logout' %}?next={% url 'index' %}">Logout</a></li>
 
                 {% else %}
 
-                    <li>
-                        <form class="navbar-form navbar-right" id="login_form" method="post" action="{% url 'login' %}">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <input type="text" name="username" placeholder="username" class="form-control" value="" size="20" />
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="password" placeholder="password" class="form-control" value="" size="20" />
-                            </div>
+                <li>
+                    <form class="navbar-form navbar-right" id="login_form" method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" name="username" placeholder="username" class="form-control" value="" size="20" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" placeholder="password" class="form-control" value="" size="20" />
+                        </div>
 
-                            <input type = "submit" value = "Login" class = "btn btn-success" />
+                        <input type = "submit" value = "Login" class = "btn btn-success" />
 
-                            <a href= "{% url 'register' %}" >
-                                <input type = "button" value="Register" class = "btn btn-success" />
-                            </a>
+                        <a href= "{% url 'register' %}" >
+                            <input type = "button" value="Register" class = "btn btn-success" />
+                        </a>
 
-                        </form>
-                    </li>
+                    </form>
+                </li>
 
                 {% endif %}
             </ul>
@@ -92,13 +101,14 @@
     </div>
 </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 </body>
+
 </html>

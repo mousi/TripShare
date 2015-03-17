@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.auth_logout, name='auth_logout'),
     url(r'^view/(?P<username>[\w\-]+)/$', views.view_profile, name='view_profile'),
     url(r'^join_trip/$', views.join_trip, name='join_trip'),
+    url(r'^edit/$', views.edit_profile, name='edit_profile'),
     )

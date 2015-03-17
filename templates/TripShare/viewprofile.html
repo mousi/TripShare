@@ -17,9 +17,9 @@
                         <input id="input-21e" value="0" type="number" class="rating" min=0 max=5 step=1 data-size="xs" >
                         <hr>
                         <div class="row placeholders">
-                            <h2><b> Username : </b> {{ user_viewed.username }}</h2>
-                            <h2><b> Age : </b> Place the age here</h2>
-                            <h2><b> Last Seen On : </b> {{ user_viewed.last_login }}</h2>
+                            <h2><b> Username: </b> {{ user_viewed.username }}</h2>
+                            <h2><b> Born: </b> {{ user_profile.dob }}</h2>
+                            <h2><b> Last Seen On: </b> {{ user_viewed.last_login }}</h2>
                             <hr>
                             <h3> Trip Details </h3>
                             <hr>
@@ -35,7 +35,7 @@
                                         </tr>
                                     {% endfor %}
                                     <tr>
-                                        <td><b>Latest Trips Joined</b></td>
+                                        <td><h3><b>Latest Trips Joined</b></h3>/td>
                                     </tr>
 
                                     {% for trip in joined_list %}

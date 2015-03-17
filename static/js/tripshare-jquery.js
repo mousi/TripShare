@@ -15,7 +15,7 @@ $(document).ready(function() {
     });
 
     $(function() {
-        $( "#city" ).autocomplete({
+        $( "#id_source,#id_destination" ).autocomplete({
             source: function( request, response ) {
                 $.ajax({
                     url: "http://gd.geobytes.com/AutoCompleteCity?filter=UK",
@@ -37,4 +37,22 @@ $(document).ready(function() {
             }
         });
     });
+
+    jQuery('#id_tripdate').datetimepicker({
+        format:'d.m.Y H:i',
+        inline:false,
+        minDate:'0',
+        lang:'en'
+    });
+    /*$(function() {
+    $( "#id_tripdate" ).datepicker({
+        minDate: 1,
+    onSelect: function(theDate) {
+        $("#dataEnd").datepicker('option', 'minDate', new Date(theDate));
+    },
+    dateFormat: 'dd/mm/yy',
+    });
+
+  });*/
+
 });

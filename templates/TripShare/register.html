@@ -8,14 +8,15 @@
 
 <div class="container">
 
-		<h1 class="form-signin-heading" style="color:blue;">User Registration</h1>
-        <h2 class="form-signin-heading">Please enter your personal information</h2>
+		<h1 class="form-signin-heading">User Registration</h1>
+
 
         {% if registered %}
           <strong> Thanks for registering</strong>
           <a href="{% url 'index' %}">Homepage </a>
 
         {% else %}
+            <h2 class="form-signin-heading">Please enter your personal information</h2>
             <strong>Register Here</strong>
            <form id="user_form" method="post" action="{% url 'register' %}"
                 enctype="multipart/form-data">
