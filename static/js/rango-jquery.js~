@@ -1,0 +1,15 @@
+$(document).ready(function() {
+
+        $("#about-btn").click( function() {
+        alert("You clicked the button using JQuery!");
+
+	$.ajax({
+  	url: 'http://www.google.com',
+  	success: function(response) {
+    	console.log(response);
+  	}
+	});
+
+
+    });
+});

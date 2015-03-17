@@ -7,14 +7,22 @@
 {% block body_block %}
 
 <div class="container">
+<<<<<<< HEAD
    <div class = "row"> 
 	<div class="table-responsive">
 
 		<table class="table" >
+=======
+    
+	<div class="table">
+
+		<table border="0" style="width:25%">
+>>>>>>> 254393f9ec66c81b24f3e7ca41df0cd7fc14f563
 		
         <tr>
 		<th>Name</th>
 		<th>Alias</th>
+<<<<<<< HEAD
 	</tr>   
 	<tr>
 		<td><a href="mailto:mousik@gmail.com">Konstantinos Kousinas </a></td>
@@ -45,3 +53,38 @@
 <div/>
 {% endblock %}
 
+=======
+		</tr>
+        
+		<tr>
+		<td><a href="mailto:mousik@gmail.com">Konstantinos Kousinas </a></td>
+		<td>Mousi</td>
+		</tr>
+		<tr>
+		<td><a href="mailto:karvounis.b@gmail.com">Vangelis Karvounis</a></td>
+		<td>Liverpoolas</td>
+		</tr>
+        <tr>
+		<td>Georgios Gkavresis</td>
+		<td>Geo</td>
+		</tr>
+		<tr>
+		<td>Athanasios Santas</td>
+		<td>Enigmatikos</td>
+		
+		</tr>
+		</table>
+		</div>
+
+
+<button id="about-btn"> Click Me - I'm Javascript on Speed</button>
+
+
+
+<p>This is a example</p>
+
+<p>This is another example</p>
+
+</div>
+{% endblock %}
+>>>>>>> 254393f9ec66c81b24f3e7ca41df0cd7fc14f563

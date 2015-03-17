@@ -3,6 +3,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+<<<<<<< HEAD
 <script src="{% static "js/tripshare-jquery.js" %}"></script>
 <script src="{% static "js/star-rating.js" %}"></script>
 <script src="{% static 'js/tripshare-ajax.js' %}"></script>
@@ -12,11 +13,19 @@
 
   <head>
 
+=======
+<script src="{% static "js/rango-jquery.js" %}"></script>
+<script src="{% static "js/star-rating.js"%}"></script>
+
+<html lang="en">
+  <head>
+>>>>>>> 254393f9ec66c81b24f3e7ca41df0cd7fc14f563
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+<<<<<<< HEAD
     <link rel="icon" href="{%static 'images/favicon.ico'%}">
 
 
@@ -27,6 +36,16 @@
     <link href="{%static 'css/dashboard.css'%}" rel="stylesheet">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+=======
+    <link rel="icon" href="{%static 'css/aris.jpg'%}">
+
+    <title>{% block title %}Welcome to TripShare!{% endblock %}</title>
+
+    <link href="{%static 'css/star-rating.css'%}" rel="stylesheet">
+   <!-- <link href="{%static 'css/bootstrap.min.css' %}" rel="stylesheet"> -->
+    <link href="{%static 'css/dashboard.css'%}" rel="stylesheet">
+    <link rel="stylesheet"  href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+>>>>>>> 254393f9ec66c81b24f3e7ca41df0cd7fc14f563
 
   </head>
 
@@ -42,6 +61,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
                 <li><a href="{% url 'index' %}">Home</a></li>
+<<<<<<< HEAD
                 <li><a href="{% url 'about' %}">About</a></li>
 
                     {% if user.is_authenticated %}
@@ -52,6 +72,16 @@
                     {% else %}
 						<li>
                             <form class="navbar-form navbar-right" id="login_form" method="post" action="{% url 'login' %}">
+=======
+
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'post' %}">Post Trip</a></li>
+						<li><a href="{% url 'view_profile' %}">View Profile</a></li>
+						
+                        <li><a href="{% url 'auth_logout' %}?next={% url 'index' %}">Logout</a></li>
+                    {% else %}
+						<form class="navbar-form navbar-right" id="login_form" method="post" action="{% url 'login' %}">
+>>>>>>> 254393f9ec66c81b24f3e7ca41df0cd7fc14f563
                         {% csrf_token %}
 						<div class="form-group">
 							<input type="text" name="username" placeholder="username" class="form-control" value="" size="20" />
@@ -67,9 +97,15 @@
                         </a>
 
 						</form>
+<<<<<<< HEAD
 
                         </li>
                     {% endif %}
+=======
+                    {% endif %}
+					
+				<li><a href="{% url 'about' %}">About</a></li> 
+>>>>>>> 254393f9ec66c81b24f3e7ca41df0cd7fc14f563
           </ul>
         </div>
       </div>
@@ -80,7 +116,11 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-2 main">
            <div>
                 {% block body_block %}{% endblock %}
+<<<<<<< HEAD
 
+=======
+				
+>>>>>>> 254393f9ec66c81b24f3e7ca41df0cd7fc14f563
                 </div>
         </div>
       </div>
@@ -91,9 +131,16 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+<<<<<<< HEAD
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 
+=======
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+>>>>>>> 254393f9ec66c81b24f3e7ca41df0cd7fc14f563
   </body>
 </html>
