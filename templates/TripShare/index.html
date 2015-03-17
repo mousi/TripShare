@@ -19,7 +19,7 @@
     <div class="row placeholders">
             			
 	<div class="container">
-      <!-- Example row of columns -->  
+        <!-- Example row of columns -->
 		<div class="row">
             {% for tr in trips %}
 			<div class="col-xs-12 col-sm-10 col-md-12">
@@ -34,16 +34,10 @@
                                     {% endif %}
                                     </p>
                                 <p><b>Description: </b> {{ tr.desc }}</p>
-
-                            <p>
-                                {% if user.is_authenticated %}
-                                     {% csrf_token %}
-                                    <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-mini btn-primary join" type="button">Join</button>
-                                {% endif %}
-                            </p>
-                            <div class="table">
-
-							<p><a href="#" class="btn btn-default detailsbtn" role="button">View Details</a></p>
+                                    <p>
+                                        <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-mini btn-primary join" type="button">Join</button>
+                                        <button class="btn btn-default detailsbtn" type="button">View Details</button>
+                                    </p>
 
                             <div class="table hiddencontent">
 
@@ -76,4 +70,6 @@
 
             {% endfor %}
 			</div>
-        {% endblock %}
+        </div>
+    </div>
+{% endblock %}
