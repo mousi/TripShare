@@ -12,7 +12,6 @@ $(document).ready(function() {
                 return $content.is(":visible") ? "Hide details" : "View details";
             });
         });
-
     });
 
     $('.btn').click(function(e) {
