@@ -35,7 +35,15 @@
                                     </p>
                                 <p><b>Description: </b> {{ tr.desc }}</p>
 
-								<p><a href="#" class="btn btn-primary" role="button">Join Trip!</a> <a href="#" class="btn btn-default detailsbtn" role="button">View Details</a></p>
+                            <p>
+                                {% if user.is_authenticated %}
+                                     {% csrf_token %}
+                                    <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-mini btn-primary join" type="button">Join</button>
+                                {% endif %}
+                            </p>
+                            <div class="table">
+
+							<p><a href="#" class="btn btn-default detailsbtn" role="button">View Details</a></p>
 
                             <div class="table hiddencontent">
 
@@ -65,6 +73,7 @@
                         </div>
 				</div>
 			</div>
+
             {% endfor %}
 			</div>
         {% endblock %}

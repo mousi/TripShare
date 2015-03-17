@@ -1,16 +1,45 @@
 from django.shortcuts import render
-from TripShare.models import Trip, TripUser, Request, User, UserProfile
-from TripShare.forms import UserForm,UserProfileForm,TripForm
-from django.contrib.auth import authenticate, login, logout
+from TripShare.models import *
+from TripShare.forms import *
+from django.contrib.auth import *
 from django.http import HttpResponseRedirect, HttpResponse
 import datetime
+from django.contrib.auth.decorators import login_required
+from django.template import *
 
 import os
+from django.core.context_processors import csrf
+
+@login_required
+def join_trip(request):
+
+    if request.method == 'POST':
+
+        user_id = request.POST.get('user_id')
+        trip_id = request.POST.get('trip_id')
+        userakos = User.objects.get(id=user_id)
+        #print userakos
+        tripaki = Trip.objects.get(id=trip_id)
+        #print tripaki
+        #print user_id
+        #print trip_id
+        #print user_id
+        #print requests
+        try:
+            #Ginetai kai me get_or_create
+            temp = Request.objects.get(user=userakos, trip=tripaki)
+        except:
+            Request.objects.create(user=userakos, trip=tripaki)
+
+    return render(request, 'TripShare/index.html', {})
 
 def index(request):
+    context_dict = {}
+    context_dict.update(csrf(request))
+
     trips_list = Trip.objects.all()
     request_list = Request.objects.all()
-    context_dict = {'trips':trips_list, 'requests':request_list}
+    context_dict = {'trips': trips_list, 'requests': request_list}
     visits = request.session.get('visits')
 
     if not visits:
@@ -178,4 +207,3 @@ def view_profile(request, username):
     context_dict={'created_list':created_list, 'joined_list':joined_trips, 'user_viewed':user, 'user_profile':profile}
 
     return render(request, 'TripShare/viewprofile.html', context_dict)
-
