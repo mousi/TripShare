@@ -210,3 +210,4 @@ def edit_profile(request):
 @login_required
 def get_requests(request):
     return HttpResponse("ante re malaka gamisou")
+

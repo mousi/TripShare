@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $('.detailsbtn').click(function () {
         $button = $(this);
         //getting the next element
@@ -44,15 +45,4 @@ $(document).ready(function() {
         minDate:'0',
         lang:'en'
     });
-    /*$(function() {
-    $( "#id_tripdate" ).datepicker({
-        minDate: 1,
-    onSelect: function(theDate) {
-        $("#dataEnd").datepicker('option', 'minDate', new Date(theDate));
-    },
-    dateFormat: 'dd/mm/yy',
-    });
-
-  });*/
-
 });

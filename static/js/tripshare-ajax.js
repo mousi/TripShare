@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     $(".join").click(function(){
-        $button = $(this)
+        $button = $(this);
         $.ajax({
             type:"POST",
             url:"join_trip/",
@@ -22,6 +22,5 @@ $(document).ready(function() {
                        //alert(rs.responseText);
             }
         });
-
     });
 });
