@@ -39,12 +39,11 @@
 
                             {% if user.is_authenticated %}
                             {% ifnotequal user tr.creator %}
-
-                            <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join" type="button">Join</button>
+                                <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join" type="button">Join</button>
                             {% else %}
                             <button class="btn btn-primary disabled" type="button">Can't join own trip!</button>
 
-                            {% endifnotequal  %}
+                            {% endifnotequal %}
                             {% endif %}
                             <button class="btn btn-default detailsbtn" type="button">View Details</button>
                         </p>

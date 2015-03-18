@@ -32,7 +32,13 @@ def index(request):
     request_list = Request.objects.all()
     context_dict = {'trips': trips_list, 'requests': request_list}
     visits = request.session.get('visits')
+    requested_trips = []
 
+    for re in request_list:
+        if re.user == request.user:
+            requested_trips.append(re)
+
+    context_dict['requested_trips'] = requested_trips
     if not visits:
         visits = 1
     reset_last_visit_time = False

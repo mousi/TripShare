@@ -45,4 +45,10 @@ $(document).ready(function() {
         minDate:'0',
         lang:'en'
     });
+
+    jQuery('#id_dob').datepicker({
+        inline:false,
+        lang:'en',
+        maxDate:'0'
+    });
 });
