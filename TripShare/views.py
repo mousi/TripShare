@@ -173,6 +173,7 @@ def register(request):
 def post(request):
     return render(request, 'TripShare/post.html', {})
 
+@login_required
 def auth_logout(request):
     logout(request)
     return HttpResponseRedirect('/TripShare/')
@@ -198,9 +199,14 @@ def view_profile(request, username):
         joined_trips = None
 
     context_dict={'created_list':created_list, 'joined_list':joined_trips, 'user_viewed':user, 'user_profile':profile}
-
+    print created_list
     return render(request, 'TripShare/viewprofile.html', context_dict)
 
 @login_required
 def edit_profile(request):
+    return HttpResponse("ante re malaka gamisou")
+
+
+@login_required
+def get_requests(request):
     return HttpResponse("ante re malaka gamisou")

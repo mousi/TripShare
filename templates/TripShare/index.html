@@ -2,75 +2,77 @@
 
 {% load staticfiles %}
 
-{% block title %}{% endblock %}
+{% block title %}TripShare{% endblock %}
 
 {% block body_block %}
+
 {% if user.is_authenticated %}
 <div class="page-header">
 
-            <h1 style="text-align: center" >Hello, {{ user.username }}!</h1>
-            {% else %}
-            <h1 style="text-align: center" >Tripshare says... Grapsou re malakiasmeno!</h1>
-
-            {% endif %}
+    <h1 style="text-align: center" >Hello, {{ user.username }}!</h1>
+    {% else %}
+    <h1 style="text-align: center" >Welcome to TripShare!</h1>
+    {% endif %}
 
 </div>
 
-    <div class="row placeholders">
-            			
-	<div class="container">
-        <!-- Example row of columns -->
-		<div class="row">
+<div class="row placeholders">
+    <div class="container">
+        <div class="row">
+
             {% for tr in trips %}
-			<div class="col-xs-12 col-sm-10 col-md-12">
-				<div class="thumbnail">
-						<div class="caption">
-							<h2><b>{{ tr.source }} : {{ tr.destination }}</b></h2>
-								<p><b>Created by:</b>
-                                    {% if user.is_authenticated %}
-                                    <a href="{% url 'view_profile' tr.creator %}"> {{ tr.creator }}</a>
-                                    {% else %}
-                                    {{ tr.creator }}
-                                    {% endif %}
-                                    </p>
-                                <p><b>Description: </b> {{ tr.desc }}</p>
-                                    <p>
-                                        {% csrf_token %}
-                                        <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join" type="button">Join</button>
-                                        <button class="btn btn-default detailsbtn" type="button">View Details</button>
-                                    </p>
 
-                            <div class="table hiddencontent">
+            <div class="col-xs-12 col-sm-10 col-md-12">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h2><b>{{ tr.source }} : {{ tr.destination }}</b></h2>
+                        <p><b>Created by:</b>
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'view_profile' tr.creator %}"> {{ tr.creator }}</a>
+                            {% else %}
+                            {{ tr.creator }}
+                            {% endif %}
+                        </p>
+                        <p><b>Description: </b> {{ tr.desc }}</p>
+                        <p>
+                            {% csrf_token %}
+                            {% if user.is_authenticated %}
+                            <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join" type="button">Join</button>
+                            {% endif %}
+                            <button class="btn btn-default detailsbtn" type="button">View Details</button>
+                        </p>
 
-								<table border="0" style="width:100%">
-								{%  if tr.cost != Null %}
-                                  <tr>
-									<td>Cost:</td>
-									<td>{{ tr.cost }}</td>
-								  </tr>
+                        <div class="table hiddencontent">
+
+                            <table border="0" style="width:100%">
+                                {%  if tr.cost != Null %}
+                                <tr>
+                                    <td>Cost:</td>
+                                    <td>{{ tr.cost }}</td>
+                                </tr>
                                 {% endif %}
-								  <tr>
-									<td>Passengers: </td>
-									<td>{{ tr.pass_num }}</td>
-								  </tr>
+                                <tr>
+                                    <td>Passengers: </td>
+                                    <td>{{ tr.pass_num }}</td>
+                                </tr>
 
                                 <tr>
-									<td>Trip Date</td>
-									<td>{{ tr.tripdate }}</td>
-								  </tr>
+                                    <td>Trip Date</td>
+                                    <td>{{ tr.tripdate }}</td>
+                                </tr>
                                 <tr>
-									<td>Date Posted</td>
-									<td>{{ tr.dateposted }}</td>
-								  </tr>
-								</table>
+                                    <td>Date Posted</td>
+                                    <td>{{ tr.dateposted }}</td>
+                                </tr>
+                            </table>
 
-								</div>
                         </div>
-				</div>
-			</div>
+                    </div>
+                </div>
+            </div>
 
             {% endfor %}
-			</div>
         </div>
     </div>
+</div>
 {% endblock %}

@@ -12,12 +12,12 @@ $(document).ready(function() {
             },
             success: function(response){
                 $button.removeClass("btn-primary");
-                $button.addClass("btn-success");
+                $button.addClass("btn-success disabled");
                 $button.text("Request Successful");
             },
             error: function(rs, e) {
                 $button.removeClass("btn-primary");
-                $button.addClass("btn-danger");
+                $button.addClass("btn-danger disabled");
                 $button.text("Error! Please reload");
                        //alert(rs.responseText);
             }
