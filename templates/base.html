@@ -7,16 +7,15 @@
 <script src="{% static 'js/star-rating.js' %}"></script>
 <script src="{% static 'js/tripshare-ajax.js' %}"></script>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+<script src="{% static 'js/jquery-1.11.2.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'js/jquery.datetimepicker.css' %}" />
-<script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/jquery.datetimepicker.js' %}"></script>
 
 <script>
-    var crsf_token = {{ csrf_token }};
+    var crsf_token = "{{ csrf_token }}";
 </script>
 
 <html lang="en">
@@ -36,7 +35,6 @@
     <link href="{%static 'css/star-rating.css'%}" rel="stylesheet">
     <link href="{%static 'css/dashboard.css'%}" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 </head>
 
@@ -107,7 +105,6 @@
 <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 </body>
 
