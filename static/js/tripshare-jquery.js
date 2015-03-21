@@ -1,4 +1,16 @@
 $(document).ready(function() {
+    $('.filters_header').click(function(){
+        $header = $(this);
+        $content = $(this).next();
+        $content.slideToggle(500, function () {
+            //execute this after slideToggle is done
+            //change text of header based on visibility of content div
+            $header.text(function () {
+                //change text based on condition
+                return $content.is(":visible") ? "Hide Filters" : "Show Filters";
+            });
+        });
+    });
     $('#myrating').on('rating.change', function(event, value, caption) {
         $.ajax({
             type: "POST",

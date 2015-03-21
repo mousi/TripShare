@@ -2,6 +2,11 @@
     display: none;
 }
 
+.filters_header {
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .ui-autocomplete-loading {
 background: white url("/static/images/wait.gif") right center no-repeat;
 }
