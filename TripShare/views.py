@@ -187,15 +187,15 @@ def auth_logout(request):
 @login_required
 def view_profile(request, username):
 
-    user = User.objects.get(username=username)
-    profile = UserProfile.objects.get(user=user)
+    userviewed = User.objects.get(username=username)
+    profile = UserProfile.objects.get(user=userviewed)
     dob = profile.dob
     now = datetime.datetime.now().date()
 
     years = (now-dob)/365
 
     #Gets the ratings of the user
-    rating = Rating.objects.filter(userRated=user)
+    rating = Rating.objects.filter(userRated=userviewed)
 
     count = 0
     totalRating = 0.0
@@ -205,16 +205,24 @@ def view_profile(request, username):
         totalRating += ra.rating
 
     #Calculates the average Rating
-    avgRating = totalRating/count
+    if count > 0:
+        avgRating = totalRating/count
+    else:
+        avgRating = 0
 
+    try:
+        myRating = Rating.objects.get(userRater=request.user,userRated=userviewed).rating
+    except:
+        myRating = 0
 
+    print myRating
     try:
         joined_trips =[]
 
-        created_list = Trip.objects.filter(creator=user)
+        created_list = Trip.objects.filter(creator=userviewed)
 
         #Returns a list of dictionaries
-        joined_list = TripUser.objects.filter(user=user)
+        joined_list = TripUser.objects.filter(user=userviewed)
 
         for d in joined_list:
             joined_trips.append(d.trip)
@@ -223,7 +231,7 @@ def view_profile(request, username):
         created_list = None
         joined_trips = None
 
-    context_dict={'created_list':created_list, 'joined_list':joined_trips, 'user_viewed':user, 'user_profile':profile, 'years':years, 'rating':avgRating}
+    context_dict={'created_list':created_list, 'joined_list':joined_trips, 'user':request.user, 'user_viewed':userviewed, 'user_profile':profile, 'years':years, 'avgrating':avgRating, 'myrating':myRating}
 
     return render(request, 'TripShare/viewprofile.html', context_dict)
 

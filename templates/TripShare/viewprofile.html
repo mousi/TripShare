@@ -6,14 +6,15 @@
 
 {% block body_block %}
 
-<div class="container">
 
+<div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-md-12">
             <div class="thumbnail">
                 <div class="caption">
                     <h2><b><img src="/media/{{ user_profile.avatar }}" alt="" height="200" width="200" /> {{user_viewed.first_name}} {{user_viewed.last_name}}</b></h2>
-                    <input class="rating" id="input-21e" value="{{rating}}" type="number" min=0 max=5 step=1 data-size="xs" >
+                    <label for="avgrating">Average Rating:</label><input class="rating" id="avg-rating" value="{{avgrating}}" type="number" min=0 max=5 readonly="true" data-size="sm" />
+                    <label for="myrating">My Rating:</label><input id="myrating" type="number" class="rating"  value="{{ myrating }}" min=0 max=5 step=1 data-size="sm" rater-id="{{ user.id }}" rated-id="{{ user_viewed.id }}" />
                     <hr>
                     <div class="row placeholders">
                         <h2><b> Username: </b> {{ user_viewed.username }}</h2>
@@ -24,7 +25,7 @@
                         <hr>
 
                         <div class="table">
-                            <table border="0" style="width:100%">
+                            <table border="0">
                                 <tr>
                                     <td><h3><b>Latest Trips Created</b></h3></td>
                                 </tr>

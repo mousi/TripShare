@@ -12,7 +12,7 @@ class UserProfile(models.Model):
     isDriver = models.BooleanField(default=False)
     # Avatar (image)
 
-    avatar = models.ImageField(upload_to='avatars', default='avatars/default.jpg') #TODO: https://github.com/matthewwithanm/django-imagekit
+    avatar = models.ImageField(upload_to='avatars', default='avatars/default.jpg')
 
     # Date of birth
     dob = models.DateField()

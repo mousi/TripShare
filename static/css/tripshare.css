@@ -6,3 +6,6 @@
 background: white url("/static/images/wait.gif") right center no-repeat;
 }
 #city { width: 25em; }
+table {
+     width:100%;
+}

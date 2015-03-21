@@ -1,5 +1,26 @@
 $(document).ready(function() {
 
+    $('#myrating').on('rating.change', function(event, value, caption) {
+        alert("dsa");
+        /*$.ajax({
+            type: "POST",
+            url: "rate/",
+            data: {
+                'userrater_id': $(this).attr('rater-id'),
+                'userrated_id': $(this).attr('rated-id'),
+                'rating': value,
+                'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+            },
+            success: function (response) {
+                $(this).val(0)
+            },
+            error: function (rs, e) {
+                $(this).rating('clear');
+            }
+
+        });*/
+    });
+
     $('.detailsbtn').click(function () {
         $button = $(this);
         //getting the next element
