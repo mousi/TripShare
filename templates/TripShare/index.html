@@ -38,18 +38,13 @@
                             {% csrf_token %}
 
                             {% if user.is_authenticated %}
-                            {% ifnotequal user tr.creator %}
-                                {% for ureq in requests %}
-                                    {% ifequal user ureq.user %}
-                                        {% ifequal ureq.trip.id tr.id  %}
-                                            <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join" type="button" disabled>Join</button>
+                                {% ifnotequal user tr.creator %}
+                                    {% if tr.id in requests %}
+                                        <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join" type="button" disabled>Join</button>
 
-                                        {% else %}
-                                            <label>"{{ ureq.trip.id }}"</label>
-                                            <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join" type="button">Join</button>
-                                        {% endifequal %}
-                                    {% endifequal %}
-                                {% endfor %}
+                                    {% else %}
+                                        <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join" type="button">Join</button>
+                                    {% endif %}
                             {% else %}
                             <button class="btn btn-primary disabled" type="button">Can't join own trip!</button>
 

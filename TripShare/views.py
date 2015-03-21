@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 import datetime
 from django.contrib.auth.decorators import login_required
 from django.template import *
+from django.db.models import F
 
 import os
 from django.core.context_processors import csrf
@@ -28,16 +29,19 @@ def index(request):
     context_dict = {}
     context_dict.update(csrf(request))
 
-    trips_list = Trip.objects.all().order_by('-dateposted')
-    request_list = Request.objects.all()
+    current_date = datetime.datetime.now().date()
+    trips_list = Trip.objects.filter(tripdate__gte = current_date).order_by('-dateposted')
+
+    #trips_list = Trip.objects.all().order_by('-dateposted')
+
+    #Get all the id of trips that user has joined
+    request_list = Request.objects.filter(user = request.user.id).values_list('trip',flat = True)
+
     tripuser_list = TripUser.objects.all()
     context_dict = {'trips': trips_list, 'requests': request_list, 'tripuser': tripuser_list}
     visits = request.session.get('visits')
     requested_trips = []
 
-    for re in request_list:
-        if re.user == request.user:
-            requested_trips.append(re)
 
     context_dict['requested_trips'] = requested_trips
     if not visits:
