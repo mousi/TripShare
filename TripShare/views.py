@@ -36,6 +36,7 @@ def respond_request(request):
         if choice == 'accept':
             #Set the reqAccepted true.
             temp.reqAccepted = True
+            TripUser.objects.get_or_create(user=temp.user, trip=temp.trip)
         else:
             temp.reqAccepted = False
         temp.save()
@@ -51,7 +52,7 @@ def index(request):
 
     #trips_list = Trip.objects.all().order_by('-dateposted')
 
-    #Get all the id of trips that user has joined
+    #Get all the id of trips that user has requested to join
     request_list = Request.objects.filter(user = request.user.id).values_list('trip',flat = True)
 
     tripuser_list = TripUser.objects.all()
