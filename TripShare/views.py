@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 import datetime
 from django.contrib.auth.decorators import login_required
 from django.template import *
+from django.db.models import F
 
 import os
 from django.core.context_processors import csrf
@@ -24,19 +25,42 @@ def join_trip(request):
         Request.objects.get_or_create(user=userakos, trip=tripaki)
     return render(request, 'TripShare/index.html', {})
 
+@login_required
+def respond_request(request):
+
+    if request.method == 'GET':
+        #Gets the choice: accept or decline.
+        choice = request.GET['choice']
+        request = request.GET['request']
+
+        temp = Request.objects.get(id=request)
+
+        if choice == 'accept':
+            #Set the reqAccepted true.
+            temp.reqAccepted = True
+        else:
+            temp.reqAccepted = False
+        temp.save()
+
+    return HttpResponse()
+
 def index(request):
     context_dict = {}
     context_dict.update(csrf(request))
 
-    trips_list = Trip.objects.all().order_by('-dateposted')
-    request_list = Request.objects.all()
-    context_dict = {'trips': trips_list, 'requests': request_list}
+    current_date = datetime.datetime.now().date()
+    trips_list = Trip.objects.filter(tripdate__gte = current_date).order_by('-dateposted')
+
+    #trips_list = Trip.objects.all().order_by('-dateposted')
+
+    #Get all the id of trips that user has joined
+    request_list = Request.objects.filter(user = request.user.id).values_list('trip',flat = True)
+
+    tripuser_list = TripUser.objects.all()
+    context_dict = {'trips': trips_list, 'requests': request_list, 'tripuser': tripuser_list}
     visits = request.session.get('visits')
     requested_trips = []
 
-    for re in request_list:
-        if re.user == request.user:
-            requested_trips.append(re)
 
     context_dict['requested_trips'] = requested_trips
     if not visits:
@@ -142,6 +166,36 @@ def user_login(request):
     else:
         return render(request, 'TripShare/index.html', {})
 
+
+@login_required
+def edit_profile(request):
+
+    edited = False
+
+    if request.method == 'POST':
+
+        user_form = EditUserForm(request.POST)
+        profile_form = EditProfileForm(request.POST, request.FILES)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+
+            profile = profile_form.save(commit = False)
+
+            profile.user = user
+
+            profile.save()
+    else:
+        user_form = EditUserForm()
+        profile_form = EditProfileForm()
+
+    context_dict = {}
+    context_dict['user_form'] = user_form
+    context_dict['profile_form'] = profile_form
+
+    return render(request, 'TripShare/editprofile.html', context_dict)
+
+
 def register(request):
 
     registered = False
@@ -235,9 +289,7 @@ def view_profile(request, username):
 
     return render(request, 'TripShare/viewprofile.html', context_dict)
 
-@login_required
-def edit_profile(request):
-    return HttpResponse("ante re malaka gamisou")
+
 
 @login_required
 def view_requests(request, username):
@@ -247,7 +299,7 @@ def view_requests(request, username):
     #print user_requests[0].trip.creator
     user_trips = Trip.objects.filter(creator=user)
     other_requests = Request.objects.filter(trip=user_trips)
-    print user_trips
-    print other_requests
+    #print user_trips
+    #print other_requests
     context_dict = {'user_requests': user_requests, 'other_requests': other_requests}
     return render(request, 'TripShare/requests.html', context_dict)
