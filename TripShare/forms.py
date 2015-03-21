@@ -31,3 +31,19 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('dob','isDriver','avatar')
+
+class EditUserForm(UserCreationForm):
+    email = forms.EmailField(required = False)
+
+    class Meta:
+        model = User
+        fields = ('first_name','last_name','username','email','password1','password2')
+        exclude = ('username',)
+        exclude = ['first_name']
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('dob','isDriver','avatar')
+        exclude = ['dob','username']
+
