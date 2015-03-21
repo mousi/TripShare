@@ -60,7 +60,7 @@
                 <button type="button" class="btn btn-success req {{or.id}}" id="accept" data-req="{{or.id}}">Accept</button>
                 <button type="button" class="btn btn-danger req {{or.id}}" id="decline" data-req="{{or.id}}">Reject</button>
                 {% else %}
-                <button type="button" class="btn btn-info" data-requester="{{or.user}}" data-trip="{{or.trip}}">Already decided!</button>
+                <button type="button" class="btn btn-info disabled" data-requester="{{or.user}}" data-trip="{{or.trip}}">Already decided!</button>
                 {% endif %}
                 </div>
             </td>

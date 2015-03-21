@@ -22,7 +22,7 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
             },
             success: function (response) {
-                //$(this).val(0)
+                $('#avgrating').rating('update', response);
             },
             error: function (rs, e) {
                 $(this).rating('clear');
@@ -122,14 +122,14 @@ $(document).ready(function() {
         $button = $(this);
         $req_acc = $button.closest("tr").find(".req_acc");
 
-        $.get('/TripShare/respond_request/', {request:request, choice: choice}, function(data){
+        $.get('/TripShare/respond_request/', {request:request, choice: choice}, function(data) {
             $req_acc.removeClass("glyphicon-ok glyphicon-remove glyphicon-minus");
-            if (choice=="accept")
+            if (choice == "accept")
                 $req_acc.addClass("glyphicon-ok");
             else
                 $req_acc.addClass("glyphicon-remove");
-            $('div.'+request).empty();
-            $('div.'+request).append('<button type="button" class="btn btn-info">Your decision has been saved!</button>')
+            $('div.' + request).empty();
+            $('div.' + request).append('<button type="button" class="btn btn-info disabled">Decision saved!</button>');
         });
 
     });

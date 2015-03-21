@@ -303,6 +303,7 @@ def view_requests(request, username):
 
 @login_required
 def rate_user(request):
+    avgRating = 0
     # Checks if the request is POST
     if request.method == 'POST':
         # Gets the rated and rater user ids
@@ -318,4 +319,18 @@ def rate_user(request):
         # Stores the rating
         Rating.objects.update_or_create(userRater=rater, userRated=rated, defaults={'rating':rating})
 
-    return HttpResponse()
+        #Gets the ratings of the user
+        rating = Rating.objects.filter(userRated=rated)
+
+        count = 0
+        totalRating = 0.0
+        #Calculates the total Rating
+        for ra in rating:
+            count += 1
+            totalRating += ra.rating
+
+        #Calculates the average Rating
+        if count > 0:
+            avgRating = totalRating/count
+
+    return HttpResponse(avgRating)
