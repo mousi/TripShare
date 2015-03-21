@@ -121,8 +121,10 @@ def populate():
     add_user_trip(user=user_jenny, trip=trip1)
 
     # Add some ratings
-    add_rating(user_jenny, user_molester, 5)
+    add_rating(user_jenny, user_molester, 4)
     add_rating(user_thanos, user_liverpoolaras, 1)
+    add_rating(user_thanos, user_molester, 3)
+    add_rating(user_liverpoolaras, user_molester, 1)
 
 
 def add_trip(description, creator, source, destination, pass_num, tripdate, dateposted, cost=None):

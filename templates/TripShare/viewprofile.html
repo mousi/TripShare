@@ -13,7 +13,7 @@
             <div class="thumbnail">
                 <div class="caption">
                     <h2><b><img src="/media/{{ user_profile.avatar }}" alt="" height="200" width="200" /> {{user_viewed.first_name}} {{user_viewed.last_name}}</b></h2>
-                    <input id="input-21e" value="0" type="number" class="rating" min=0 max=5 step=1 data-size="xs" >
+                    <input class="rating" id="input-21e" value="{{rating}}" type="number" min=0 max=5 step=1 data-size="xs" >
                     <hr>
                     <div class="row placeholders">
                         <h2><b> Username: </b> {{ user_viewed.username }}</h2>

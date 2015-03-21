@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Trip Requests{% endblock %}
+
+{% block body_block %}
+
+<div class="container">
+    <table class="table">
+        {% for re in requests%}
+        <tr>
+            <td>{{re.trip}}</td>
+            <td>{{re.user}}</td>
+            {% ifequal user re.user %}
+                <td>FGH</td>
+            {%endifequal%}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -189,6 +189,25 @@ def view_profile(request, username):
 
     user = User.objects.get(username=username)
     profile = UserProfile.objects.get(user=user)
+    dob = profile.dob
+    now = datetime.datetime.now().date()
+
+    years = (now-dob)/365
+
+    #Gets the ratings of the user
+    rating = Rating.objects.filter(userRated=user)
+
+    count = 0
+    totalRating = 0.0
+    #Calculates the total Rating
+    for ra in rating:
+        count += 1
+        totalRating += ra.rating
+
+    #Calculates the average Rating
+    avgRating = totalRating/count
+
+
     try:
         joined_trips =[]
 
@@ -204,16 +223,22 @@ def view_profile(request, username):
         created_list = None
         joined_trips = None
 
-    context_dict={'created_list':created_list, 'joined_list':joined_trips, 'user_viewed':user, 'user_profile':profile}
-    print created_list
+    context_dict={'created_list':created_list, 'joined_list':joined_trips, 'user_viewed':user, 'user_profile':profile, 'years':years, 'rating':avgRating}
+
     return render(request, 'TripShare/viewprofile.html', context_dict)
 
 @login_required
 def edit_profile(request):
     return HttpResponse("ante re malaka gamisou")
 
-
 @login_required
-def get_requests(request):
-    return HttpResponse("ante re malaka gamisou")
-
+def view_requests(request, username):
+    user = User.objects.get(username=username)
+    user_requests = Request.objects.filter(user=user)
+    print user_requests
+    user_trips = Trip.objects.filter(creator=user)
+    print user_trips
+    #other_requests =
+    #print requests
+    context_dict = {'user_requests': user_requests}
+    return render(request, 'TripShare/requests.html', context_dict)
