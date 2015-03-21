@@ -234,11 +234,12 @@ def edit_profile(request):
 @login_required
 def view_requests(request, username):
     user = User.objects.get(username=username)
+
     user_requests = Request.objects.filter(user=user)
-    print user_requests
+    #print user_requests[0].trip.creator
     user_trips = Trip.objects.filter(creator=user)
+    other_requests = Request.objects.filter(trip=user_trips)
     print user_trips
-    #other_requests =
-    #print requests
-    context_dict = {'user_requests': user_requests}
+    print other_requests
+    context_dict = {'user_requests': user_requests, 'other_requests': other_requests}
     return render(request, 'TripShare/requests.html', context_dict)

@@ -7,16 +7,39 @@
 {% block body_block %}
 
 <div class="container">
+
+
+    <h2>Your requests:</h2>
     <table class="table">
-        {% for re in requests%}
         <tr>
-            <td>{{re.trip}}</td>
-            <td>{{re.user}}</td>
-            {% ifequal user re.user %}
-                <td>FGH</td>
-            {%endifequal%}
+            <th>Trip</th>
+            <th>Creator</th>
+            <th>Status</th>
         </tr>
+
+        {% for ur in user_requests %}
+            <tr>
+                <td>{{ur.trip}}</td>
+                <td>{{ur.trip.creator}}</td>
+                {% if ur.reqAccepted %}
+                    <td><span class="glyphicon glyphicon-ok"></span></td>
+                {% elif ur.reqAccepted == False %}
+                    <td><span class="glyphicon glyphicon-remove"></span></td>
+                {% else %}
+                    <td><span class="glyphicon glyphicon-minus"></span></td>
+                {% endif %}
+            </tr>
         {% endfor %}
+    </table>
+
+    <h2>Requests by other users:</h2>
+    <table class="table">
+        <tr>
+            <th>Trip</th>
+            <th>Creator</th>
+            <th>Status</th>
+        </tr>
+
     </table>
 </div>
 {% endblock %}

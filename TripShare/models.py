@@ -40,7 +40,7 @@ class Trip(models.Model):
     #dateposted = models.DateTimeField(default= datetime.datetime.now())
 
     def __unicode__(self):
-        return self.desc
+        return self.source + " to " + self.destination
 
 # A user can rate another user with a rating.
 class Rating(models.Model):
