@@ -5,8 +5,6 @@ from django.contrib.auth import *
 from django.http import HttpResponseRedirect, HttpResponse
 import datetime
 from django.contrib.auth.decorators import login_required
-from django.template import *
-from django.db.models import F
 
 import os
 from django.core.context_processors import csrf
@@ -303,3 +301,22 @@ def view_requests(request, username):
     #print other_requests
     context_dict = {'user_requests': user_requests, 'other_requests': other_requests}
     return render(request, 'TripShare/requests.html', context_dict)
+
+@login_required
+def rate_user(request):
+    # Checks if the request is POST
+    if request.method == 'POST':
+        # Gets the rated and rater user ids
+        user_rated_id=request.POST.get('userrated_id')
+        user_rater_id=request.POST.get('userrater_id')
+        # Gets the rating
+        rating = request.POST.get('rating')
+
+        # Gets the two users by their ID
+        rater = User.objects.get(id=user_rater_id)
+        rated = User.objects.get(id=user_rated_id)
+
+        # Stores the rating
+        Rating.objects.update_or_create(userRater=rater, userRated=rated, defaults={'rating':rating})
+
+    return HttpResponse()

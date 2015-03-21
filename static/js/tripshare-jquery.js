@@ -1,10 +1,8 @@
 $(document).ready(function() {
-
     $('#myrating').on('rating.change', function(event, value, caption) {
-        alert("dsa");
-        /*$.ajax({
+        $.ajax({
             type: "POST",
-            url: "rate/",
+            url: "/TripShare/rate/",
             data: {
                 'userrater_id': $(this).attr('rater-id'),
                 'userrated_id': $(this).attr('rated-id'),
@@ -12,13 +10,13 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
             },
             success: function (response) {
-                $(this).val(0)
+                //$(this).val(0)
             },
             error: function (rs, e) {
                 $(this).rating('clear');
             }
 
-        });*/
+        });
     });
 
     $('.detailsbtn').click(function () {
@@ -81,4 +79,41 @@ $(document).ready(function() {
             );
         }
     }
+
+    $(".join").click(function(){
+        $button = $(this);
+        $.ajax({
+            type:"POST",
+            url:"join_trip/",
+            data:{
+                'user_id': $(this).attr('data-user'),
+                'trip_id': $(this).attr('data-trip'),
+                'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+            },
+            success: function(response){
+                $button.removeClass("btn-primary");
+                $button.addClass("btn-success disabled");
+                $button.text("Request Successful");
+            },
+            error: function(rs, e) {
+                $button.removeClass("btn-primary");
+                $button.addClass("btn-danger disabled");
+                $button.text("Error! Please reload");
+                       //alert(rs.responseText);
+            }
+        });
+    });
+
+    $(".req").click(function(){
+        var choice = $(this).attr('id');
+        var request = $(this).attr('data-req');
+        $button = $(this);
+
+        $.get('/TripShare/respond_request/', {request:request, choice: choice}, function(data){
+
+            $('div.'+request).empty();
+            $('div.'+request).append('<button type="button" class="btn btn-info">Your decision has been saved!</button>')
+        });
+
+    });
 });

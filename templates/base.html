@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 
-<script>
-    var crsf_token = "{{ csrf_token }}";
-</script>
-
 <html lang="en">
 
 <head>
@@ -22,24 +18,18 @@
     <link href="{%static 'css/star-rating.css'%}" rel="stylesheet">
     <link href="{%static 'css/dashboard.css'%}" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-    <script src="{% static 'js/star-rating.js' %}"></script>
-    <script src="{% static 'js/tripshare-jquery.js' %}"></script>
-    <script src="{% static 'js/tripshare-ajax.js' %}"></script>
-
     <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.datetimepicker.css' %}" />
+
     <script src="{% static 'js/jquery-1.11.2.js' %}"></script>
     <script src="{% static 'js/jquery-ui.js' %}"></script>
-
-    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.datetimepicker.css' %}" />
+    <script src="{% static 'js/star-rating.js' %}"></script>
     <script src="{% static 'js/jquery.datetimepicker.js' %}"></script>
+    <script src="{% static 'js/tripshare-jquery.js' %}"></script>
 
 </head>
 
 <body>
-
 <!-- Header -->
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
