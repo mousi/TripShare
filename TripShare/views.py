@@ -24,6 +24,25 @@ def join_trip(request):
         Request.objects.get_or_create(user=userakos, trip=tripaki)
     return render(request, 'TripShare/index.html', {})
 
+@login_required
+def respond_request(request):
+
+    if request.method == 'GET':
+        #Gets the choice: accept or decline.
+        choice = request.GET['choice']
+        request = request.GET['request']
+
+        temp = Request.objects.get(id=request)
+
+        if choice == 'accept':
+            #Set the reqAccepted true.
+            temp.reqAccepted = True
+        else:
+            temp.reqAccepted = False
+        temp.save()
+
+    return HttpResponse()
+
 def index(request):
     context_dict = {}
     context_dict.update(csrf(request))
@@ -239,7 +258,7 @@ def view_requests(request, username):
     #print user_requests[0].trip.creator
     user_trips = Trip.objects.filter(creator=user)
     other_requests = Request.objects.filter(trip=user_trips)
-    print user_trips
-    print other_requests
+    #print user_trips
+    #print other_requests
     context_dict = {'user_requests': user_requests, 'other_requests': other_requests}
     return render(request, 'TripShare/requests.html', context_dict)

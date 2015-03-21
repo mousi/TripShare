@@ -18,17 +18,17 @@
         </tr>
 
         {% for ur in user_requests %}
-            <tr>
-                <td>{{ur.trip}}</td>
-                <td>{{ur.trip.creator}}</td>
-                {% if ur.reqAccepted %}
-                    <td><span class="glyphicon glyphicon-ok"></span></td>
-                {% elif ur.reqAccepted == False %}
-                    <td><span class="glyphicon glyphicon-remove"></span></td>
-                {% else %}
-                    <td><span class="glyphicon glyphicon-minus"></span></td>
-                {% endif %}
-            </tr>
+        <tr>
+            <td>{{ur.trip}}</td>
+            <td><a href="{% url 'view_profile' ur.trip.creator %}">{{ur.trip.creator}}</a></td>
+            {% if ur.reqAccepted %}
+            <td><span class="glyphicon glyphicon-ok"></span></td>
+            {% elif ur.reqAccepted == False %}
+            <td><span class="glyphicon glyphicon-remove"></span></td>
+            {% else %}
+            <td><span class="glyphicon glyphicon-minus"></span></td>
+            {% endif %}
+        </tr>
         {% endfor %}
     </table>
 
@@ -36,10 +36,37 @@
     <table class="table">
         <tr>
             <th>Trip</th>
-            <th>Creator</th>
+            <th>Requested by</th>
             <th>Status</th>
+            <th>Accept/Reject</th>
         </tr>
 
+        {% for or in other_requests%}
+        <tr>
+            <td>{{or.trip}}</td>
+            <td><a href="{% url 'view_profile' or.user %}">{{or.user}}</a></td>
+            {% if or.reqAccepted == True %}
+            <td><span class="glyphicon glyphicon-ok"></span></td>
+            {% elif or.reqAccepted == False %}
+            <td><span class="glyphicon glyphicon-remove"></span></td>
+            {% else %}
+            <td><span class="glyphicon glyphicon-minus"></span></td>
+            {% endif %}
+
+            <td>
+                {% csrf_token %}
+                {% if or.reqAccepted == None %}
+                <div class="{{or.id}}">
+                <button type="button" class="btn btn-success req {{or.id}}" id="accept" data-req="{{or.id}}">Accept</button>
+                <button type="button" class="btn btn-danger req {{or.id}}" id="decline" data-req="{{or.id}}">Reject</button>
+                {% else %}
+                <button type="button" class="btn btn-info" data-requester="{{or.user}}" data-trip="{{or.trip}}">Already decided!</button>
+                {% endif %}
+                </div>
+            </td>
+
+        </tr>
+        {% endfor %}
     </table>
 </div>
 {% endblock %}

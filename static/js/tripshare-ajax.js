@@ -23,4 +23,17 @@ $(document).ready(function() {
             }
         });
     });
+
+    $(".req").click(function(){
+        var choice = $(this).attr('id');
+        var request = $(this).attr('data-req');
+        $button = $(this);
+
+        $.get('/TripShare/respond_request/', {request:request, choice: choice}, function(data){
+
+            $('div.'+request).empty();
+            $('div.'+request).append('<button type="button" class="btn btn-info">Your decision has been saved!</button>')
+        });
+
+    });
 });
