@@ -46,11 +46,11 @@
             <td>{{or.trip}}</td>
             <td><a href="{% url 'view_profile' or.user %}">{{or.user}}</a></td>
             {% if or.reqAccepted == True %}
-            <td><span class="glyphicon glyphicon-ok"></span></td>
+            <td><span class="req_acc glyphicon glyphicon-ok"></span></td>
             {% elif or.reqAccepted == False %}
-            <td><span class="glyphicon glyphicon-remove"></span></td>
+            <td><span class="req_acc glyphicon glyphicon-remove"></span></td>
             {% else %}
-            <td><span class="glyphicon glyphicon-minus"></span></td>
+            <td><span class="req_acc glyphicon glyphicon-minus"></span></td>
             {% endif %}
 
             <td>
