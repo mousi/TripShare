@@ -140,8 +140,6 @@ def test(request):
     return render(request, 'TripShare/test.html', context_dict)
 
 def user_login(request):
-    print request.method
-
     if request.method == 'POST':
 
         username = request.POST.get('username')

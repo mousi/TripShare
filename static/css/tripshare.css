@@ -9,3 +9,17 @@ background: white url("/static/images/wait.gif") right center no-repeat;
 table {
      width:100%;
 }
+
+.prof_header {
+    width: 100%;
+    overflow: hidden;
+}
+.prof_avatar {
+    width: 200px;
+    float:left;
+}
+
+.prof_basic {
+    padding-left: 30px;
+    overflow: hidden;
+}
