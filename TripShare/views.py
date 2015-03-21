@@ -30,7 +30,8 @@ def index(request):
 
     trips_list = Trip.objects.all().order_by('-dateposted')
     request_list = Request.objects.all()
-    context_dict = {'trips': trips_list, 'requests': request_list}
+    tripuser_list = TripUser.objects.all()
+    context_dict = {'trips': trips_list, 'requests': request_list, 'tripuser': tripuser_list}
     visits = request.session.get('visits')
     requested_trips = []
 
@@ -142,6 +143,36 @@ def user_login(request):
     else:
         return render(request, 'TripShare/index.html', {})
 
+
+@login_required
+def edit_profile(request):
+
+    edited = False
+
+    if request.method == 'POST':
+
+        user_form = EditUserForm(request.POST)
+        profile_form = EditProfileForm(request.POST, request.FILES)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+
+            profile = profile_form.save(commit = False)
+
+            profile.user = user
+
+            profile.save()
+    else:
+        user_form = EditUserForm()
+        profile_form = EditProfileForm()
+
+    context_dict = {}
+    context_dict['user_form'] = user_form
+    context_dict['profile_form'] = profile_form
+
+    return render(request, 'TripShare/editprofile.html', context_dict)
+
+
 def register(request):
 
     registered = False
@@ -208,9 +239,7 @@ def view_profile(request, username):
     print created_list
     return render(request, 'TripShare/viewprofile.html', context_dict)
 
-@login_required
-def edit_profile(request):
-    return HttpResponse("ante re malaka gamisou")
+
 
 
 @login_required
