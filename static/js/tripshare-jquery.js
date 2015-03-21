@@ -30,11 +30,9 @@ $(document).ready(function() {
                 });
             },
             minLength: 3,
-            open: function() {
-                //$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-            },
-            close: function() {
-                //$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+            select: function(event, ui) {
+                var selectedObj = ui.item;
+                getcityname(selectedObj.value, $(this));
             }
         });
     });
@@ -51,4 +49,15 @@ $(document).ready(function() {
         lang:'en',
         maxDate:'0'
     });
+
+    function getcityname(fqcn, txtField) {
+        if(fqcn) {
+            jQuery.getJSON(
+                "http://gd.geobytes.com/GetCityDetails?callback=?&fqcn="+fqcn,
+                function (data) {
+                    txtField.val(data.geobytescity);
+                }
+            );
+        }
+    }
 });
