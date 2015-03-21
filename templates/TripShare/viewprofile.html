@@ -13,12 +13,10 @@
             <div class="thumbnail">
                 <div class="caption">
                     <h2><b><img src="/media/{{ user_profile.avatar }}" alt="" height="200" width="200" /> {{user_viewed.first_name}} {{user_viewed.last_name}}</b></h2>
-                    <form>
                     <label for="avgrating">Average Rating:</label><input class="rating" id="avg-rating" value="{{avgrating}}" type="number" min=0 max=5 readonly="true" data-size="sm" />
                     <label for="myrating">My Rating:</label>
                     {% csrf_token %}
                     <input id="myrating" type="number" class="rating"  value="{{ myrating }}" min=0 max=5 step=1 data-size="sm" rater-id="{{ user.id }}" rated-id="{{ user_viewed.id }}" />
-                    </form>
                     <hr>
                     <div class="row placeholders">
                         <h2><b> Username: </b> {{ user_viewed.username }}</h2>
