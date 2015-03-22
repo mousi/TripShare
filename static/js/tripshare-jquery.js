@@ -105,7 +105,10 @@ $(document).ready(function() {
 
     //Plugin for choosing a past date for choosing the user's birthdate.
     jQuery('#id_dob').datepicker({
+        changeMonth: true,
+        changeYear: true,
         inline:false,
+        format:'d/m/Y',
         lang:'en',
         maxDate:'0'
     });
