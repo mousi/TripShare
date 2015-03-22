@@ -13,20 +13,20 @@
     <a href="{% url 'index' %}">Homepage </a>
 
     {% else %}
-    <h1 class="form-signin-heading">User Registration</h1>
+    <h1 class="text-center">User Registration</h1>
     <h2 class="form-signin-heading">Please enter your personal information</h2>
-    <strong>Register Here</strong>
+
     <form id="user_form" method="post" action="{% url 'register' %}"
           enctype="multipart/form-data">
 
         {% csrf_token %}
 
-        <table>
+        <table class="table table-hover">
             {{ user_form.as_table }}
             {{ profile_form.as_table }}
         </table>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        <button class="btn btn-lg btn-primary" type="submit">Register</button>
     </form>
     {% endif %}
 

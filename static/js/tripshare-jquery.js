@@ -1,4 +1,17 @@
 $(document).ready(function() {
+
+    $('#search_city_btn').click(function(){
+        var content = $('#search_city').val();
+        //alert(content);
+        $('div .caption').each(function(index){
+            //console.log($(this).children('h2').text() );
+            var text = $(this).children('h2').text();
+            if ( text.toLowerCase().indexOf(content.toLowerCase()) == -1){
+                $(this).hide();
+            }
+        });
+    });
+
     $('.filters_header').click(function(){
         $header = $(this);
         $content = $(this).next();
@@ -47,7 +60,7 @@ $(document).ready(function() {
     });
 
     $(function() {
-        $( "#id_source,#id_destination" ).autocomplete({
+        $( "#id_source,#id_destination,#search_city" ).autocomplete({
             source: function( request, response ) {
                 $.ajax({
                     url: "http://gd.geobytes.com/AutoCompleteCity?filter=UK",
