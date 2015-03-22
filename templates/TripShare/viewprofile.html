@@ -24,7 +24,6 @@
                             </div>
                         </div>
 
-
                         <label for="avgrating">Average Rating:</label><input class="rating" id="avgrating" value="{{avgrating}}" type="number" min=0 max=5 readonly="true" data-size="sm" />
                         {% ifnotequal user user_viewed %}
                         <label for="myrating">My Rating:</label>
@@ -48,7 +47,7 @@
 
                                 {% for trip in joined_list %}
                                 <tr>
-                                    <td>{{ trips }}</td>
+                                    <td>{{ trip.trip }}</td>
                                 </tr>
                                 {% endfor %}
 
@@ -56,39 +55,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
-
-    <label for="avgrating">Average Rating:</label><input class="rating" id="avgrating" value="{{avgrating}}" type="number" min=0 max=5 readonly="true" data-size="sm" />
-    {% ifnotequal user user_viewed %}
-    <label for="myrating">My Rating:</label>
-    {% csrf_token %}
-    <input id="myrating" type="number" class="rating"  value="{{ myrating }}" min=0 max=5 step=1 data-size="sm" rater-id="{{ user.id }}" rated-id="{{ user_viewed.id }}" />
-    {% endifnotequal %}
-    <hr>
-    <div class="table placeholders">
-        <table border="0">
-            <tr>
-                <td><h3><b>Latest Trips Created</b></h3></td>
-            </tr>
-            {% for trips in created_list %}
-            <tr>
-                <td>{{ trips }}</td>
-            </tr>
-            {% endfor %}
-            <tr>
-                <td><h3><b>Latest Trips Joined</b></h3></td>
-            </tr>
-
-            {% for trip in joined_list %}
-            <tr>
-                <td>{{ trips }}</td>
-            </tr>
-            {% endfor %}
-
-        </table>
     </div>
 </div>
 </div>

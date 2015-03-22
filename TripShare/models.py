@@ -10,8 +10,8 @@ class UserProfile(models.Model):
     # The additional attributes
     # Is this user a driver?
     isDriver = models.BooleanField(default=False)
-    # Avatar (image)
 
+    # Avatar (image)
     avatar = models.ImageField(upload_to='avatars', default='avatars/default.jpg')
 
     # Date of birth
