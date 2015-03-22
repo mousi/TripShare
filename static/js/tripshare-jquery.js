@@ -1,35 +1,34 @@
 $(document).ready(function() {
 
+    //Updates the index page based on the city searched.
     $('#search_city_btn').click(function(){
         var content = $('#search_city').val();
-        //alert(content);
+
         $('div .caption').each(function(index){
             $(this).parent().show();
-            //console.log($(this).children('h2').text() );
+
             var text = $(this).children('h2').text();
             if ( text.toLowerCase().indexOf(content.toLowerCase()) == -1){
+                //Hide every trip that does not depart or arrive to the city that the user is searching for.
                 $(this).parent().hide();
             }
         });
     });
 
-    $('.filters_header').click(function(){
-        $header = $(this);
-        $content = $(this).next();
-        $content.slideToggle(500, function () {
-            //execute this after slideToggle is done
-            //change text of header based on visibility of content div
-            $header.text(function () {
-                //change text based on condition
-                return $content.is(":visible") ? "Hide Filters" : "Show Filters";
-            });
+    //Shows everything in the index page.
+    $('#clear_city_btn').click(function(){
+        $('#search_city').val("");
+        $('div .caption').each(function(index){
+            $(this).parent().show();
         });
     });
 
+    //Handles the rating of users.
     $('#myrating').on('rating.change', function(event, value, caption) {
         $.ajax({
             type: "POST",
             url: "/TripShare/rate/",
+            //Gets the rater's and the rated user's ID and the rating value.
             data: {
                 'userrater_id': $(this).attr('rater-id'),
                 'userrated_id': $(this).attr('rated-id'),
@@ -37,6 +36,7 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
             },
             success: function (response) {
+                //Updates the rating's stars.
                 $('#avgrating').rating('update', response);
             },
             error: function (rs, e) {
@@ -60,8 +60,9 @@ $(document).ready(function() {
         });
     });
 
+    //Handles the autocompletion function for cities.
     $(function() {
-        $( "#id_source,#id_destination,#search_city" ).autocomplete({
+        $("#id_source,#id_destination,#search_city").autocomplete({
             source: function( request, response ) {
                 $.ajax({
                     url: "http://gd.geobytes.com/AutoCompleteCity?filter=UK",
@@ -82,19 +83,7 @@ $(document).ready(function() {
         });
     });
 
-    jQuery('#id_tripdate').datetimepicker({
-        format:'d.m.Y H:i',
-        inline:false,
-        minDate:'0',
-        lang:'en'
-    });
-
-    jQuery('#id_dob').datepicker({
-        inline:false,
-        lang:'en',
-        maxDate:'0'
-    });
-
+    //Helper function for trimming the city output string.
     function getcityname(fqcn, txtField) {
         if(fqcn) {
             jQuery.getJSON(
@@ -106,6 +95,22 @@ $(document).ready(function() {
         }
     }
 
+    //Plugin for choosing a future date and time for posting trips.
+    jQuery('#id_tripdate').datetimepicker({
+        format:'d.m.Y H:i',
+        inline:false,
+        minDate:'0',
+        lang:'en'
+    });
+
+    //Plugin for choosing a past date for choosing the user's birthdate.
+    jQuery('#id_dob').datepicker({
+        inline:false,
+        lang:'en',
+        maxDate:'0'
+    });
+
+    //Handles the users' request to join a trip.
     $(".join").click(function(){
         $button = $(this);
         $.ajax({
@@ -125,11 +130,11 @@ $(document).ready(function() {
                 $button.removeClass("btn-primary");
                 $button.addClass("btn-danger disabled");
                 $button.text("Error! Please reload");
-                       //alert(rs.responseText);
             }
         });
     });
 
+    //Handles the user's dealing of requests from other users for his trips.
     $(".req").click(function(){
         var choice = $(this).attr('id');
         var request = $(this).attr('data-req');
@@ -145,6 +150,5 @@ $(document).ready(function() {
             $('div.' + request).empty();
             $('div.' + request).append('<button type="button" class="btn btn-info disabled">Decision saved!</button>');
         });
-
     });
 });
