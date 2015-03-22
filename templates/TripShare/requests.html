@@ -41,9 +41,9 @@
             <th>Accept/Reject</th>
         </tr>
 
-        {% for or in other_requests%}
+        {% for or in other_requests %}
         <tr>
-            <td>{{or.trip}}</td>
+            <td>{{ or.trip }}</td>
             <td><a href="{% url 'view_profile' or.user %}">{{or.user}}</a></td>
             {% if or.reqAccepted == True %}
             <td><span class="req_acc glyphicon glyphicon-ok"></span></td>
@@ -56,11 +56,15 @@
             <td>
                 {% csrf_token %}
                 {% if or.reqAccepted == None %}
-                <div class="{{or.id}}">
-                <button type="button" class="btn btn-success req {{or.id}}" id="accept" data-req="{{or.id}}">Accept</button>
-                <button type="button" class="btn btn-danger req {{or.id}}" id="decline" data-req="{{or.id}}">Reject</button>
+                    {% if or.passengers < or.trip.pass_num %}
+                        <div class="{{or.id}}">
+                        <button type="button" class="btn btn-success req {{or.id}}" id="accept" data-req="{{or.id}}">Accept</button>
+                        <button type="button" class="btn btn-danger req {{or.id}}" id="decline" data-req="{{or.id}}">Reject</button>
+                    {% else %}
+                        <button type="button" class="btn btn-danger disabled" data-requester="{{or.user}}" data-trip="{{or.trip}}">Trip full!</button>
+                    {% endif %}
                 {% else %}
-                <button type="button" class="btn btn-info disabled" data-requester="{{or.user}}" data-trip="{{or.trip}}">Already decided!</button>
+                    <button type="button" class="btn btn-info disabled" data-requester="{{or.user}}" data-trip="{{or.trip}}">Already decided!</button>
                 {% endif %}
                 </div>
             </td>

@@ -34,17 +34,47 @@ def respond_request(request):
         choice = request.GET['choice']
         request = request.GET['request']
 
-        temp = Request.objects.get(id=request)
+        req = Request.objects.get(id=request)
+        tripUsers = TripUser.objects.filter(trip=req.trip)
+
+        totalPass = req.trip.pass_num
+        acceptedPass = len(tripUsers)
+
+        driverExists = False
+        creatorProfile = UserProfile.objects.get(user=req.trip.creator)
+        requesterProfile = UserProfile.objects.get(user=req.user)
+
+        if creatorProfile.isDriver:
+            driverExists = True
+        elif requesterProfile.isDriver:
+            driverExists = True
+        else:
+            for tUser in tripUsers:
+                userProf = UserProfile.objects.get(user=tUser)
+                if userProf.isDriver:
+                    driverExists = True
+                    break
+
 
         if choice == 'accept':
-            #Set the reqAccepted true.
-            temp.reqAccepted = True
-            TripUser.objects.get_or_create(user=temp.user, trip=temp.trip)
+            # If there are more than one spots available in this trip
+            if (totalPass - acceptedPass) > 1:
+                req.reqAccepted = True
+                TripUser.objects.get_or_create(user=req.user, trip=req.trip)
+            # If there is only 1 spot available, we have to make sure that there is a driver in this trip
+            elif (totalPass - acceptedPass) == 1:
+                if driverExists:
+                    req.reqAccepted = True
+                    TripUser.objects.get_or_create(user=req.user, trip=req.trip)
+                else:
+                    return HttpResponse(False)
+            else:
+                return HttpResponse(False)
         else:
-            temp.reqAccepted = False
+            req.reqAccepted = False
         #Saves the request to the database.
-        temp.save()
-    return HttpResponse()
+        req.save()
+    return HttpResponse(True)
 
 #View that handles the index page.
 def index(request):
@@ -256,8 +286,8 @@ def view_requests(request, username):
 
     #Gets all the trips that the user has created.
     user_trips = Trip.objects.filter(creator=user)
-    #Gets the requests for the user's trips.
-    other_requests = Request.objects.filter(trip=user_trips)
+    #Gets the requests for the user's trips and annotate the number of passengers in each request's trip.
+    other_requests = Request.objects.filter(trip=user_trips).annotate(passengers=Count('trip__tripuser'))
 
     context_dict = {'user_requests': user_requests, 'other_requests': other_requests}
     return render(request, 'TripShare/requests.html', context_dict)
