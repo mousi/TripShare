@@ -6,6 +6,7 @@ from django.forms.extras.widgets import SelectDateWidget
 
 #Form for posting trips
 class TripForm(forms.ModelForm):
+
     #Description of the trip.
     desc = forms.CharField(label="Description",max_length=255,widget=forms.Textarea)
     source = forms.CharField(label="From",max_length=30)
@@ -35,8 +36,10 @@ class UserForm(UserCreationForm):
 
 #Used during registration to register a user's custom fields.
 class UserProfileForm(forms.ModelForm):
+
     dob = forms.DateField(label="Date of birth")
     isDriver = forms.BooleanField(label="Are you a driver?")
+
     class Meta:
         model = UserProfile
         fields = ('dob','isDriver','avatar')
