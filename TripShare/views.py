@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 import os
 from django.core.context_processors import csrf
 
+#Creates a request to join a trip.
 @login_required
 def join_trip(request):
     #Checks if the request is POST
@@ -19,10 +20,11 @@ def join_trip(request):
 
         userakos = User.objects.get(id=user_id)
         tripaki = Trip.objects.get(id=trip_id)
-
+        #If there is no request from that user to that trip, create a request
         Request.objects.get_or_create(user=userakos, trip=tripaki)
     return render(request, 'TripShare/index.html', {})
 
+#User accepts or rejects a request.
 @login_required
 def respond_request(request):
 
@@ -163,36 +165,6 @@ def user_login(request):
     else:
         return render(request, 'TripShare/index.html', {})
 
-
-@login_required
-def edit_profile(request):
-
-    edited = False
-
-    if request.method == 'POST':
-
-        user_form = EditUserForm(request.POST)
-        profile_form = EditProfileForm(request.POST, request.FILES)
-
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-
-            profile = profile_form.save(commit = False)
-
-            profile.user = user
-
-            profile.save()
-    else:
-        user_form = EditUserForm()
-        profile_form = EditProfileForm()
-
-    context_dict = {}
-    context_dict['user_form'] = user_form
-    context_dict['profile_form'] = profile_form
-
-    return render(request, 'TripShare/editprofile.html', context_dict)
-
-
 def register(request):
 
     registered = False
@@ -235,15 +207,17 @@ def auth_logout(request):
     logout(request)
     return HttpResponseRedirect('/TripShare/')
 
+#View for viewing profiles.
 @login_required
 def view_profile(request, username):
 
     userviewed = User.objects.get(username=username)
     profile = UserProfile.objects.get(user=userviewed)
     dob = profile.dob
-    now = datetime.datetime.now().date()
+    today = datetime.datetime.today()
 
-    years = (now-dob)/365
+    #Calculates the age of the user.
+    age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 
     #Gets the ratings of the user
     rating = Rating.objects.filter(userRated=userviewed)
@@ -282,25 +256,28 @@ def view_profile(request, username):
         created_list = None
         joined_trips = None
 
-    context_dict={'created_list':created_list, 'joined_list':joined_trips, 'user':request.user, 'user_viewed':userviewed, 'user_profile':profile, 'years':years, 'avgrating':avgRating, 'myrating':myRating}
+    context_dict={'age': age, 'created_list':created_list, 'joined_list':joined_trips, 'user':request.user, 'user_viewed':userviewed, 'user_profile':profile, 'avgrating':avgRating, 'myrating':myRating}
 
     return render(request, 'TripShare/viewprofile.html', context_dict)
 
 
-
+#Returns all the requests that have been submitted for a user's trips.
 @login_required
 def view_requests(request, username):
     user = User.objects.get(username=username)
 
+    #Gets all the requests the user has submitted.
     user_requests = Request.objects.filter(user=user)
-    #print user_requests[0].trip.creator
+
+    #Gets all the trips that the user has created.
     user_trips = Trip.objects.filter(creator=user)
+    #Gets the requests for the user's trips.
     other_requests = Request.objects.filter(trip=user_trips)
-    #print user_trips
-    #print other_requests
+
     context_dict = {'user_requests': user_requests, 'other_requests': other_requests}
     return render(request, 'TripShare/requests.html', context_dict)
 
+#Gets a user's rating for another user. Recalculates the average rating of the user and stores it.
 @login_required
 def rate_user(request):
     avgRating = 0

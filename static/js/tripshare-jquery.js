@@ -11,6 +11,7 @@ $(document).ready(function() {
             });
         });
     });
+
     $('#myrating').on('rating.change', function(event, value, caption) {
         $.ajax({
             type: "POST",
@@ -27,7 +28,6 @@ $(document).ready(function() {
             error: function (rs, e) {
                 $(this).rating('clear');
             }
-
         });
     });
 
