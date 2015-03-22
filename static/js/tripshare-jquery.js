@@ -4,10 +4,11 @@ $(document).ready(function() {
         var content = $('#search_city').val();
         //alert(content);
         $('div .caption').each(function(index){
+            $(this).parent().show();
             //console.log($(this).children('h2').text() );
             var text = $(this).children('h2').text();
             if ( text.toLowerCase().indexOf(content.toLowerCase()) == -1){
-                $(this).hide();
+                $(this).parent().hide();
             }
         });
     });
