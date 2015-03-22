@@ -47,12 +47,14 @@ def populate():
                                  first_name="Jenny",
                                  last_name="Naive",
                                  email="naivejenny@tripshare.co.uk",
+                                 avatar="avatars/jenny.jpg",
                                  dob=datetime.date(1996,3,12))
     user_molester = add_userProfile(username="molester",
                                  # Password: tripshare
                                  password="pbkdf2_sha256$15000$zenpFl9q2m5Y$j86TIRkMKfMfaFuO11YY2An9cD4jUofWInw8QCJk83I=",
                                  first_name="Mo",
                                  last_name="Lester",
+                                 avatar="avatars/molester.jpg",
                                  email="molester@tripshare.co.uk",
                                  dob=datetime.date(1963,2,9))
     
