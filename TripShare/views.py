@@ -42,28 +42,26 @@ def respond_request(request):
             TripUser.objects.get_or_create(user=temp.user, trip=temp.trip)
         else:
             temp.reqAccepted = False
+        #Saves the request to the database.
         temp.save()
-
     return HttpResponse()
 
+#View that handles the index page.
 def index(request):
     context_dict = {}
     context_dict.update(csrf(request))
 
+    #Shows only the trips that are going to be done in the future.
     current_date = datetime.datetime.now().date()
     trips_list = Trip.objects.filter(tripdate__gte = current_date).order_by('-dateposted').annotate(passengers=Count('tripuser'))
-
-    #trips_list = Trip.objects.all().order_by('-dateposted')
 
     #Get all the id of trips that user has requested to join
     request_list = Request.objects.filter(user = request.user.id).values_list('trip',flat = True)
 
-    tripuser_list = TripUser.objects.all()
-
     context_dict = {'trips': trips_list, 'requests': request_list}
+
     visits = request.session.get('visits')
     requested_trips = []
-
 
     context_dict['requested_trips'] = requested_trips
     if not visits:
@@ -114,22 +112,23 @@ def index(request):
 
     return render(request, 'TripShare/index.html', context_dict)
 
+#About page.
 def about(request):
     return render(request, 'TripShare/about.html', {})
 
+#Add a trip to the database.
 @login_required
 def addTrip(request):
 
     if request.method == 'POST':
-
+        #Gets the form's fields.
         form = TripForm(request.POST)
 
+        #If the form's fields are valid.
         if form.is_valid():
 
             trip = form.save(commit = False)
-
             trip.creator = request.user
-
             trip.save()
 
             return index(request)
@@ -144,18 +143,17 @@ def test(request):
     context_dict = {}
     return render(request, 'TripShare/test.html', context_dict)
 
+#Handles user's login
 def user_login(request):
     if request.method == 'POST':
 
         username = request.POST.get('username')
         password = request.POST.get('password')
-
+        #Authenticates the user.
         user = authenticate(username = username, password = password)
 
-        print username,password
-
         if user:
-
+            #If the user has not been deactivated by the admins.
             if user.is_active:
 
                 login(request,user)
@@ -167,6 +165,7 @@ def user_login(request):
     else:
         return render(request, 'TripShare/index.html', {})
 
+#Handles user's register form.
 def register(request):
 
     registered = False
@@ -215,7 +214,9 @@ def view_profile(request, username):
 
     userviewed = User.objects.get(username=username)
     profile = UserProfile.objects.get(user=userviewed)
+    #User's date of birth.
     dob = profile.dob
+    #Today
     today = datetime.datetime.today()
 
     #Calculates the age of the user.
@@ -230,23 +231,17 @@ def view_profile(request, username):
     except:
         myRating = 0
 
-    print myRating
     try:
-        joined_trips =[]
-
+        #List of trips created by this user.
         created_list = Trip.objects.filter(creator=userviewed)
-
-        #Returns a list of dictionaries
+        #List of trips this user has been accepted to.
         joined_list = TripUser.objects.filter(user=userviewed)
-
-        for d in joined_list:
-            joined_trips.append(d.trip)
 
     except Trip.DoesNotExist:
         created_list = None
         joined_trips = None
 
-    context_dict={'age': age, 'created_list':created_list, 'joined_list':joined_trips, 'user':request.user, 'user_viewed':userviewed, 'user_profile':profile, 'avgrating':avgRating, 'myrating':myRating}
+    context_dict={'age': age, 'created_list':created_list, 'joined_list':joined_list, 'user':request.user, 'user_viewed':userviewed, 'user_profile':profile, 'avgrating':avgRating, 'myrating':myRating}
 
     return render(request, 'TripShare/viewprofile.html', context_dict)
 

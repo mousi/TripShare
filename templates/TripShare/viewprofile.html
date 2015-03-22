@@ -24,7 +24,6 @@
                                 </div>
                             </div>
 
-
                             <label for="avgrating">Average Rating:</label><input class="rating" id="avgrating" value="{{avgrating}}" type="number" min=0 max=5 readonly="true" data-size="sm" />
                             {% ifnotequal user user_viewed %}
                                 <label for="myrating">My Rating:</label>
@@ -48,7 +47,7 @@
 
                                     {% for trip in joined_list %}
                                         <tr>
-                                            <td>{{ trips }}</td>
+                                            <td>{{ trip.trip }}</td>
                                         </tr>
                                     {% endfor %}
 
@@ -60,5 +59,10 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
+=======
+</div>
+</div>
+>>>>>>> 449f153b6fce997f6c4942bde7e6b8b4d0882097
 
 {% endblock %}
