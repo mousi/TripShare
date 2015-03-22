@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Profile of Users. Users can have a driving licence, a car, number of ratings and averageRating.
 # Used to add additional fields to the default Django User model.
@@ -30,8 +31,8 @@ class Trip(models.Model):
     # To
     destination = models.CharField(max_length=30)
     #passenger_number
-    pass_num = models.IntegerField()
-    cost = models.FloatField(null=True)
+    pass_num = models.IntegerField(validators=[MinValueValidator(0)])
+    cost = models.FloatField(null=True, validators=[MinValueValidator(0.0)])
     #Date when trip starts
     tripdate = models.DateTimeField()
     #Date the trip is posted
