@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-import datetime
 
 # Profile of Users. Users can have a driving licence, a car, number of ratings and averageRating.
 # Used to add additional fields to the default Django User model.
