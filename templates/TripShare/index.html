@@ -62,7 +62,7 @@
                                     {% if user.is_authenticated %}
                                         {% ifnotequal user tr.creator %}
                                             {% if tr.id in requests %}
-                                                <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join" type="button" disabled>Join</button>
+                                                <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join disabled" type="button">Already Requested</button>
 
                                             {% else %}
                                                 <button data-user="{{user.id}}" data-trip="{{tr.id}}" id="{{tr.id}}" class="btn btn-primary join" type="button">Join</button>
@@ -85,8 +85,8 @@
                                             </tr>
                                         {% endif %}
                                         <tr>
-                                            <td>Passengers: </td>
-                                            <td>{{ tr.pass_num }}</td>
+                                            <td>Passengers (Joined / Total): </td>
+                                            <td>{{ tr.passengers }} / {{ tr.pass_num }}</td>
                                         </tr>
                                         <tr>
                                             <td>Date Posted</td>

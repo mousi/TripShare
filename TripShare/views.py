@@ -2,6 +2,7 @@ from django.shortcuts import render
 from TripShare.models import *
 from TripShare.forms import *
 from django.contrib.auth import *
+from django.db.models import Avg, Count
 from django.http import HttpResponseRedirect, HttpResponse
 import datetime
 from django.contrib.auth.decorators import login_required
@@ -50,7 +51,7 @@ def index(request):
     context_dict.update(csrf(request))
 
     current_date = datetime.datetime.now().date()
-    trips_list = Trip.objects.filter(tripdate__gte = current_date).order_by('-dateposted')
+    trips_list = Trip.objects.filter(tripdate__gte = current_date).order_by('-dateposted').annotate(passengers=Count('tripuser'))
 
     #trips_list = Trip.objects.all().order_by('-dateposted')
 
@@ -58,7 +59,8 @@ def index(request):
     request_list = Request.objects.filter(user = request.user.id).values_list('trip',flat = True)
 
     tripuser_list = TripUser.objects.all()
-    context_dict = {'trips': trips_list, 'requests': request_list, 'tripuser': tripuser_list}
+
+    context_dict = {'trips': trips_list, 'requests': request_list}
     visits = request.session.get('visits')
     requested_trips = []
 
@@ -219,21 +221,9 @@ def view_profile(request, username):
     #Calculates the age of the user.
     age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 
-    #Gets the ratings of the user
-    rating = Rating.objects.filter(userRated=userviewed)
-
-    count = 0
-    totalRating = 0.0
-    #Calculates the total Rating
-    for ra in rating:
-        count += 1
-        totalRating += ra.rating
-
-    #Calculates the average Rating
-    if count > 0:
-        avgRating = totalRating/count
-    else:
-        avgRating = 0
+    #Gets the average rating of the user
+    ratings = Rating.objects.filter(userRated=userviewed).aggregate(Avg('rating'))
+    avgRating = ratings['rating__avg']
 
     try:
         myRating = Rating.objects.get(userRater=request.user,userRated=userviewed).rating
@@ -280,7 +270,6 @@ def view_requests(request, username):
 #Gets a user's rating for another user. Recalculates the average rating of the user and stores it.
 @login_required
 def rate_user(request):
-    avgRating = 0
     # Checks if the request is POST
     if request.method == 'POST':
         # Gets the rated and rater user ids
@@ -296,18 +285,8 @@ def rate_user(request):
         # Stores the rating
         Rating.objects.update_or_create(userRater=rater, userRated=rated, defaults={'rating':rating})
 
-        #Gets the ratings of the user
-        rating = Rating.objects.filter(userRated=rated)
-
-        count = 0
-        totalRating = 0.0
-        #Calculates the total Rating
-        for ra in rating:
-            count += 1
-            totalRating += ra.rating
-
-        #Calculates the average Rating
-        if count > 0:
-            avgRating = totalRating/count
+        #Gets the average rating of the user
+        ratings = Rating.objects.filter(userRated=rated).aggregate(Avg('rating'))
+        avgRating = ratings['rating__avg']
 
     return HttpResponse(avgRating)
