@@ -86,12 +86,27 @@ $(document).ready(function() {
     //Handles the autocompletion function for users.
     $(function() {
         $("#search_user").autocomplete({
-
-            source: "/TripShare/search_user",
+            source: function(request, response) {
+                $.ajax({
+                    url: "/TripShare/search_user/",
+                    dataType: "json",
+                    data: {
+                        q: request.term
+                    },
+                    success: function(data) {
+                        response(data)
+                    }
+                });
+            },
+            minLength: 3
+            /*source: "/TripShare/search_user",
             minLength: 2,
             select:function(event,ui) {
                 var selectedObj = ui.item;
-            }
+            },
+            success: function(data) {
+                alert("data");
+            }*/
 
         });
     });
