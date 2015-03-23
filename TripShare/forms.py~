@@ -4,7 +4,7 @@ from TripShare.models import Trip
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.extras.widgets import SelectDateWidget
 import datetime
-from django.core.exceptions import ValidationError
+
 
 
 #Form for posting trips
