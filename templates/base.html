@@ -61,16 +61,10 @@
                         <div class="form-group">
                             <input type="password" name="password" placeholder="password" class="form-control" value="" size="20" />
                         </div>
-
                         <input type = "submit" value = "Login" class = "btn btn-success" />
-
-                        <a href= "{% url 'register' %}" >
-                            <input type = "button" value="Register" class = "btn btn-success" />
-                        </a>
-
+                        <a href= "{% url 'register' %}" class = "btn btn-success" >Register</a>
                     </form>
                 </li>
-
                 {% endif %}
             </ul>
         </div>
