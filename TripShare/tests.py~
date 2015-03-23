@@ -1,8 +1,10 @@
 from django.test import TestCase
-from TripShare.models import Trip,User,UserProfile,Rating
+from TripShare.models import Trip,UserProfile,Rating
+from django.contrib.auth.models import User
 import datetime
 import time
 from django.core.urlresolvers import reverse
+from django.test.client import Client
 
 class TripMethodTests(TestCase):
 	"""
@@ -36,8 +38,9 @@ class TripMethodTests(TestCase):
 
 
 		trip = Trip(desc='test',creator = user2,source='tests',destination='testd',pass_num=-1,cost=-1,tripdate =datetime.datetime(2013,5,1,12,0,0),dateposted='2015-02-03')
-		trip.save()
 		today = datetime.datetime.today()
+		trip.save()
+
 		
 		self.assertEqual((trip.tripdate >= today), True)
 
@@ -46,8 +49,12 @@ class TripMethodTests(TestCase):
 	"""
 
 	def test_ensure_rating_is_not_negative(self):
-		user = User(id = 1)
 
+
+		user = User.objects.get_or_create(id=10)[0]
+		user1 = User.objects.get_or_create(id=9)[0]
+
+		
 		rating_test = Rating(user,user,-1)
 		rating_test.save()
 		self.assertEqual((rating_test.rating >= 0), True)
@@ -60,21 +67,17 @@ class TripMethodTests(TestCase):
         	
         	response = self.client.get(reverse('index'))
         	self.assertEqual(response.status_code, 200)
-	
+
+
+	"""
+   		Populate a new trip to the back-end and then check the response.
+   	"""
 	def test_index_view_with_trips(self):
-    		"""
-   		 If no trips exist, an appropriate message should be displayed.
-   		 """
+    		
 		user2 = User(id = 1)
 
-		t = Trip.objects.get_or_create(desc='test')[0]
-		t.creator = user2
-		t.destination = 'testd'
-		t.source = 'tests'
-		t.pass_num = 1
-		t.cost = 1
-		t.tripdate = '2013-02-03'
-		t.dateposted = '2015-02-03'
+		t = Trip(desc='test',creator = user2,source='tests',destination='testd',pass_num=-1,cost=-1,tripdate =datetime.datetime(2013,5,1,12,0,0),dateposted='2015-02-03')
+		
 		t.save()
 
 
@@ -84,21 +87,14 @@ class TripMethodTests(TestCase):
     		self.assertEqual(response.status_code, 200)
     		self.assertContains(response, 'test')
 
-    		#num_cats =len(response.context['categories'])
-    		#self.assertEqual(num_cats , 4)
-
 	def test_index_view_with_registers(self):
     		"""
-   		 If no trips exist, an appropriate message should be displayed.
+   		 Register a user and check if is in DB.
    		 """
-		user2 = User(id = 1)
-		profile = UserProfile(user = user2,isDriver = True,dob="1990-2-3")
+		c = Client()
+		response = c.post('/login/', {'username': 'geo', 'password': 'tripshare'})
+		response.status_code
+		response = c.get('/viewprofile/')
+		response.content
 
 
-
-    		response = self.client.get(reverse('register'))
-    		self.assertEqual(response.status_code, 200)
-    		self.assertContains(response, "1990-2-3")
-
-    		#num_cats =len(response.context['categories'])
-    		#self.assertEqual(num_cats , 4)
