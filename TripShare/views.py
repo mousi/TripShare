@@ -28,7 +28,7 @@ def join_trip(request):
         userProfNotify.hasNotifications = True
         userProfNotify.save()
 
-    return render(request, 'TripShare/index.html', {})
+    return HttpResponse()
 
 #User accepts or rejects a request.
 @login_required
@@ -45,14 +45,18 @@ def respond_request(request):
         totalPass = req.trip.pass_num
         acceptedPass = len(tripUsers)
 
+        # Start with False and search for a driver inside this trip
         driverExists = False
         creatorProfile = UserProfile.objects.get(user=req.trip.creator)
         requesterProfile = UserProfile.objects.get(user=req.user)
 
+        # The driver could be the creator...
         if creatorProfile.isDriver:
             driverExists = True
+        # ...the user that requested to join...
         elif requesterProfile.isDriver:
             driverExists = True
+        # ...or any of the other users inside the trip!
         else:
             for tUser in tripUsers:
                 userProf = UserProfile.objects.get(user=tUser)
@@ -70,13 +74,17 @@ def respond_request(request):
                 if driverExists:
                     respondToReq(req, True)
                 else:
+                    # Can't accept because there will be no driver
                     return HttpResponse("nodriver")
             else:
+                # Can't accept because the trip is full
                 return HttpResponse("tripfull")
         else:
             respondToReq(req, False)
+    # Everything went fine
     return HttpResponse("OK")
 
+# Helper method to store the request response and raise the new notification flag
 def respondToReq(request, resp):
     # Update the corresponding field
     request.reqAccepted = resp
@@ -243,7 +251,7 @@ def view_profile(request, username):
     try:
         userviewed = User.objects.get(username=username)
     except:
-        raise Http404
+        return render(request, 'TripShare/viewprofile.html', {'userexists':False})
 
     profile = UserProfile.objects.get(user=userviewed)
     #User's date of birth.
@@ -271,9 +279,9 @@ def view_profile(request, username):
 
     except Trip.DoesNotExist:
         created_list = None
-        joined_trips = None
+        joined_list = None
 
-    context_dict={'age': age, 'created_list':created_list, 'joined_list':joined_list, 'user':request.user, 'user_viewed':userviewed, 'user_profile':profile, 'avgrating':avgRating, 'myrating':myRating}
+    context_dict={'age': age, 'created_list':created_list, 'joined_list':joined_list, 'user':request.user, 'user_viewed':userviewed, 'user_profile':profile, 'avgrating':avgRating, 'myrating':myRating,'userexists':True}
 
     return render(request, 'TripShare/viewprofile.html', context_dict)
 
@@ -320,11 +328,14 @@ def rate_user(request):
         ratings = Rating.objects.filter(userRated=rated).aggregate(Avg('rating'))
         avgRating = ratings['rating__avg']
 
-    return HttpResponse(avgRating)
+        return HttpResponse(avgRating)
+    else:
+        return HttpResponse()
 
 @login_required
 def check_notifications(request):
     if request.method == 'POST':
+        # Get the user's profile
         userid = request.POST.get('usrid')
         user = User.objects.get(id=userid)
         userProf=UserProfile.objects.get(user=user)

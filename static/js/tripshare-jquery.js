@@ -25,6 +25,7 @@ $(document).ready(function() {
         checkNotifications() // this will run every 10 seconds
     }, 10000);
 
+    // The function that checks for new notifications. this will be called by the above anonymous function
     function checkNotifications() {
         $requestsbtn = $('#requestsbtn');
         $.ajax({
@@ -174,18 +175,23 @@ $(document).ready(function() {
         $req_acc = $button.closest("tr").find(".req_acc");
 
         $.get('/TripShare/respond_request/', {request:request, choice: choice}, function(data) {
+            // If the trip is full, alert the user and then reload the page to reload the trips' statuses
             if(data=="tripfull") {
                 alert("This trip is full! Can't accept new requests!");
                 document.location.reload();
+            // If there is no driver, alert the user
             } else if (data=="nodriver") {
                 alert("There is no driver in this trip and you are trying to fill the last position. Please choose a driver instead!");
-                document.location.reload();
+            // If the repsonse was OK
             } else {
+                // Change the icon of the request status
                 $req_acc.removeClass("glyphicon-ok glyphicon-remove glyphicon-minus");
                 if (choice == "accept")
                     $req_acc.addClass("glyphicon-ok");
                 else
                     $req_acc.addClass("glyphicon-remove");
+
+                // Delete the two buttons and replace them with an appropriate disabled button
                 $('div.' + request).empty();
                 $('div.' + request).append('<button type="button" class="btn btn-info disabled">Decision saved!</button>');
             }

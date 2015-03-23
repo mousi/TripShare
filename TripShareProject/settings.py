@@ -27,7 +27,7 @@ TEMPLATE_DIRS = [
 SECRET_KEY = 'ra54r-^_$_7ma4j%+%c^d+jknrqntqlyqsa)0vkpe_ikv)4l72'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 

@@ -21,6 +21,7 @@
             <div class="thumbnail">
                 <div class="caption">
                     <div class="profile">
+                        {% if userexists %}
                         <div class="prof_header">
                             <div class="prof_avatar"><img src="/media/{{ user_profile.avatar }}" alt="" height="200" width="200" /></div>
                             <div class="prof_basic">
@@ -61,6 +62,9 @@
                                 {% endfor %}
                             </table>
                         </div>
+                        {% else %}
+                        <p id="nouser">The user you specified does not exist!</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
