@@ -83,6 +83,19 @@ $(document).ready(function() {
         });
     });
 
+    //Handles the autocompletion function for users.
+    $(function() {
+        $("#search_user").autocomplete({
+
+            source: "/TripShare/search_user",
+            minLength: 2,
+            select:function(event,ui) {
+                var selectedObj = ui.item;
+            }
+
+        });
+    });
+
     //Helper function for trimming the city output string.
     function getcityname(fqcn, txtField) {
         if(fqcn) {

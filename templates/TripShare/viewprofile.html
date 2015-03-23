@@ -7,6 +7,15 @@
 {% block body_block %}
 
 <div class="container-fluid">
+    <div class="index_search">
+            <div class="input-group">
+                {% csrf_token %}
+                <input type="text" id="search_user" class="form-control" placeholder="Search for a user...">
+            <span class="input-group-btn">
+            <button class="btn btn-default" id="search_user_btn" type="button">Search</button>
+            </span>
+            </div>
+        </div>
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-md-12">
             <div class="thumbnail">

@@ -6,9 +6,30 @@ from django.db.models import Avg, Count
 from django.http import HttpResponseRedirect, HttpResponse
 import datetime
 from django.contrib.auth.decorators import login_required
+import json
 
 import os
 from django.core.context_processors import csrf
+
+@login_required
+def search_user(request):
+    #Gets the username that the user tries to search for.
+    #print request
+    term = request.GET.get('term', '')
+    #Gets all the users that their username contains the string the user has provided.
+    search_qs = User.objects.filter(username__contains=term)
+    results = []
+
+    for r in search_qs:
+        users_json = {}
+        users_json['user'] = r.username
+
+        results.append(users_json)
+
+    mimetype = 'application/json'
+    print results
+    data = json.dumps(results)
+    return HttpResponse(data, mimetype)
 
 #Creates a request to join a trip.
 @login_required
