@@ -7,7 +7,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 import datetime
 from django.contrib.auth.decorators import login_required
 import json
-
 import os
 from django.core.context_processors import csrf
 
@@ -19,18 +18,18 @@ def search_user(request):
     #Gets all the users that their username contains the string the user has provided.
     search_qs = User.objects.filter(username__contains=term)
     results = []
-
+    data = {}
     for r in search_qs:
-        users_json = {}
-        users_json['user'] = r.username
+        username = r.username
+        results.append(username)
+        data['id'] = r.id
+        data['username'] = r.username
 
-        results.append(users_json)
-
-    mimetype = 'application/json'
-    print results
-    data = json.dumps(results)
+    #data = json.dumps(results)
     print data
-    return HttpResponse(data, mimetype)
+    mimetype = 'application/json'
+
+    return HttpResponse(json.dumps(data), mimetype)
 
 #Creates a request to join a trip.
 @login_required
@@ -110,7 +109,12 @@ def index(request):
     #Get all the id of trips that user has requested to join
     request_list = Request.objects.filter(user = request.user.id).values_list('trip',flat = True)
 
-    context_dict = {'trips': trips_list, 'requests': request_list}
+    #Gets all the trips that the user has created.
+    user_trips = Trip.objects.filter(creator=request.user.id)
+    #Gets the requests for the user's trips and gives to the index page the number of requests that have been sent to the user.
+    other_requests = Request.objects.filter(trip=user_trips)
+
+    context_dict = {'trips': trips_list, 'requests': request_list, 'other_requests': len(other_requests)}
 
     visits = request.session.get('visits')
     requested_trips = []

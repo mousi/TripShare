@@ -86,29 +86,32 @@ $(document).ready(function() {
     //Handles the autocompletion function for users.
     $(function() {
         $("#search_user").autocomplete({
-            source: function(request, response) {
+             source: function( request, response ) {
                 $.ajax({
                     url: "/TripShare/search_user/",
                     dataType: "json",
                     data: {
                         q: request.term
                     },
-                    success: function(data) {
-                        response(data)
+                    success: function( data ) {
+
+                        response(data);
                     }
                 });
             },
-            minLength: 3
-            /*source: "/TripShare/search_user",
+            minLength: 2,
+            select: function(event, ui) {
+
+                $("#search_user").val(ui.item.username);
+            }
+        });
+            /*source: "/TripShare/search_user/",
+            selectFirst:true,
             minLength: 2,
             select:function(event,ui) {
-                var selectedObj = ui.item;
-            },
-            success: function(data) {
-                alert("data");
-            }*/
-
-        });
+                $("#search_user").val(ui.item);
+            }
+        });*/
     });
 
     //Helper function for trimming the city output string.
