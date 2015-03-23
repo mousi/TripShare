@@ -6,30 +6,8 @@ from django.db.models import Avg, Count
 from django.http import HttpResponseRedirect, HttpResponse
 import datetime
 from django.contrib.auth.decorators import login_required
-import json
-import os
 from django.core.context_processors import csrf
-
-@login_required
-def search_user(request):
-    #Gets the username that the user tries to search for.
-    #print request
-    term = request.GET.get('q', '')
-    #Gets all the users that their username contains the string the user has provided.
-    search_qs = User.objects.filter(username__contains=term)
-    results = []
-    data = {}
-    for r in search_qs:
-        username = r.username
-        results.append(username)
-        data['id'] = r.id
-        data['username'] = r.username
-
-    #data = json.dumps(results)
-    print data
-    mimetype = 'application/json'
-
-    return HttpResponse(json.dumps(data), mimetype)
+from django.http import Http404
 
 #Creates a request to join a trip.
 @login_required
@@ -262,8 +240,12 @@ def auth_logout(request):
 #View for viewing profiles.
 @login_required
 def view_profile(request, username):
+    userviewed = None
+    try:
+        userviewed = User.objects.get(username=username)
+    except:
+        raise Http404
 
-    userviewed = User.objects.get(username=username)
     profile = UserProfile.objects.get(user=userviewed)
     #User's date of birth.
     dob = profile.dob
