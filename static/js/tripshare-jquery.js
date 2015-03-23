@@ -174,13 +174,21 @@ $(document).ready(function() {
         $req_acc = $button.closest("tr").find(".req_acc");
 
         $.get('/TripShare/respond_request/', {request:request, choice: choice}, function(data) {
-            $req_acc.removeClass("glyphicon-ok glyphicon-remove glyphicon-minus");
-            if (choice == "accept")
-                $req_acc.addClass("glyphicon-ok");
-            else
-                $req_acc.addClass("glyphicon-remove");
-            $('div.' + request).empty();
-            $('div.' + request).append('<button type="button" class="btn btn-info disabled">Decision saved!</button>');
+            if(data=="tripfull") {
+                alert("This trip is full! Can't accept new requests!");
+                document.location.reload();
+            } else if (data=="nodriver") {
+                alert("There is no driver in this trip and you are trying to fill the last position. Please choose a driver instead!");
+                document.location.reload();
+            } else {
+                $req_acc.removeClass("glyphicon-ok glyphicon-remove glyphicon-minus");
+                if (choice == "accept")
+                    $req_acc.addClass("glyphicon-ok");
+                else
+                    $req_acc.addClass("glyphicon-remove");
+                $('div.' + request).empty();
+                $('div.' + request).append('<button type="button" class="btn btn-info disabled">Decision saved!</button>');
+            }
         });
     });
 });

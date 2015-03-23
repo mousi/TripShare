@@ -64,28 +64,27 @@ def respond_request(request):
         if choice == 'accept':
             # If there are more than one spots available in this trip
             if (totalPass - acceptedPass) > 1:
-                req.reqAccepted = True
-                TripUser.objects.get_or_create(user=req.user, trip=req.trip)
+                respondToReq(req, True)
             # If there is only 1 spot available, we have to make sure that there is a driver in this trip
             elif (totalPass - acceptedPass) == 1:
                 if driverExists:
                     respondToReq(req, True)
                 else:
-                    return HttpResponse(False)
+                    return HttpResponse("nodriver")
             else:
-                return HttpResponse(False)
+                return HttpResponse("tripfull")
         else:
             respondToReq(req, False)
-    return HttpResponse(True)
+    return HttpResponse("OK")
 
 def respondToReq(request, resp):
     # Update the corresponding field
     request.reqAccepted = resp
+    request.save()
 
     if resp:
         # Add the user to the trip
         TripUser.objects.get_or_create(user=request.user, trip=request.trip)
-    request.save()
 
     # Raise the flag to show a new notification to the user
     userProf = UserProfile.objects.get(user=request.user)
