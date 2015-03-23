@@ -304,8 +304,8 @@ def view_profile(request, username):
 
 #Returns all the requests that have been submitted for a user's trips.
 @login_required
-def view_requests(request, username):
-    user = User.objects.get(username=username)
+def view_requests(request):
+    user = request.user
 
     #Gets all the requests the user has submitted.
     user_requests = Request.objects.filter(user=user)

@@ -30,6 +30,9 @@ class UserProfile(models.Model):
     # Date of birth
     dob = models.DateField()
 
+    # A flag to see if the user has new notifications
+    hasNotifications = models.BooleanField(default=False)
+
     def __unicode__(self):
         return self.user.username
 
