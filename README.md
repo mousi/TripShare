@@ -13,15 +13,28 @@ mkvirtualenv <name>
 
 When the environment is created, go to the application's folder in your machine and enter:
 ```
-pip install -r requirements.txt
+pip install -U -r requirements.txt
 ```
 It will install all the necessary packages in order to use this application.
 
-Now, you need to setup the database for the application. There is a script ready to create the database and populate it.
-In your terminal, enter:
+Now, you need to setup the database for the application. 
+<ol>
+<li>If you work on Windows, you need to enter the following:</li>
+  <ol>
+    <li><i>python manage.py makemigrations TripShare</i></li>
+    <li><i>python manage.py migrate</i></li>
+    <li><i>python populate_trip.py</i></li>
+  </ol>
+  
+  <li>If you work in a UNIX based machine, there is a script ready to create the database and populate it.
+In your terminal, enter: <i>./update_db.sh </i></li>
+</ol>
+
+If you want to create an admin enter the following:
 ```
-./update_db.sh
+python manage.py createsuperuser
 ```
+and follow the instructions.
 
 Finally, enter the following to your terminal:
 ```
