@@ -44,21 +44,7 @@ class TripMethodTests(TestCase):
 		
 		self.assertEqual((trip.tripdate >= today), True)
 
-	"""
-	   Checks if model Rating accepts rating < 0
-	"""
-
-	"""def test_ensure_rating_is_not_negative(self):
-
-
-		user = User.objects.get_or_create(id=10)[0]
-		user1 = User.objects.get_or_create(id=9)[0]
-
-		
-		rating_test = Rating(user,user,-1)
-		rating_test.save()
-		self.assertEqual((rating_test.rating >= 0), True)"""
-
+	
 	"""
 	    If no trips exist, an appropriate message sould be displayed
 	"""
@@ -87,14 +73,53 @@ class TripMethodTests(TestCase):
     		self.assertEqual(response.status_code, 200)
     		self.assertContains(response, 'test')
 
-	def test_index_view_with_registers(self):
+	def test_login_view_for_an_existing_user(self):
     		"""
-   		 Register a user and check if is in DB.
+   		 Tries to login an existing user.
+		 Then checks viewprofile view.
    		 """
 		c = Client()
-		response = c.post('/login/', {'username': 'geo', 'password': 'tripshare'})
+		response = c.post('/user_login/', {'username': 'geo', 'password': 'tripshare'})
 		response.status_code
 		response = c.get('/viewprofile/')
 		response.content
 
+	"""
+		Tests view rate_user.
+		Then checks viewprofile view.
+	"""
+	
+	def test_view_rate_user(self):
+
+		c = Client()
+		response = c.post('/rate_user/',{'userratedid': '1', 'userraterid': '2', 'rating': '3'})
+		response.status_code
+		response = c.get('/viewprofile/')
+	
+
+
+	"""
+		Tests view join_trip
+		Then checks viewprofile view.
+	"""
+
+	def test_view_join_trip(self):
+		
+		c = Client()
+		response = c.post('/join_trip/',{'userid': '1', 'tripid': '2'})
+		response.status_code
+		response = c.get('/viewprofile/')
+
+	"""
+		Tests view add_trip
+		Adds a new trip and then checks index view
+	"""
+	def test_view_add_trip(self):
+		
+		c = Client()
+		response = c.post('/add_trip/',{'desc': 'Senegal', 'creator': 'user_mousi', 'source':'Senegal', 'destination':'Nigeria', 'pass_num': '2', 'cost': '1', 'tripdate': '2015-04-04', 'dateposted': '2015-03-03'})
+		response.status_code
+		reponse = c.get('/index/')
+
+	
 
