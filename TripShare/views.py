@@ -6,7 +6,6 @@ from django.db.models import Avg, Count
 from django.http import HttpResponseRedirect, HttpResponse
 import datetime
 from django.contrib.auth.decorators import login_required
-
 from django.core.context_processors import csrf
 from django.http import Http404
 
@@ -19,10 +18,16 @@ def join_trip(request):
         user_id = request.POST.get('user_id')
         trip_id = request.POST.get('trip_id')
 
-        userakos = User.objects.get(id=user_id)
-        tripaki = Trip.objects.get(id=trip_id)
+        tmpUser = User.objects.get(id=user_id)
+        tmpTrip = Trip.objects.get(id=trip_id)
         #If there is no request from that user to that trip, create a request
-        Request.objects.get_or_create(user=userakos, trip=tripaki)
+        Request.objects.get_or_create(user=tmpUser, trip=tmpTrip)
+
+        # Raise the hasNotifications flag for the creator of the trip
+        userProfNotify = UserProfile.objects.get(user=tmpTrip.creator)
+        userProfNotify.hasNotifications = True
+        userProfNotify.save()
+
     return render(request, 'TripShare/index.html', {})
 
 #User accepts or rejects a request.
@@ -64,17 +69,29 @@ def respond_request(request):
             # If there is only 1 spot available, we have to make sure that there is a driver in this trip
             elif (totalPass - acceptedPass) == 1:
                 if driverExists:
-                    req.reqAccepted = True
-                    TripUser.objects.get_or_create(user=req.user, trip=req.trip)
+                    respondToReq(req, True)
                 else:
                     return HttpResponse(False)
             else:
                 return HttpResponse(False)
         else:
-            req.reqAccepted = False
-        #Saves the request to the database.
-        req.save()
+            respondToReq(req, False)
     return HttpResponse(True)
+
+def respondToReq(request, resp):
+    # Update the corresponding field
+    request.reqAccepted = resp
+
+    if resp:
+        # Add the user to the trip
+        TripUser.objects.get_or_create(user=request.user, trip=request.trip)
+    request.save()
+
+    # Raise the flag to show a new notification to the user
+    userProf = UserProfile.objects.get(user=request.user)
+    userProf.hasNotifications = True
+    userProf.save()
+    return
 
 #View that handles the index page.
 def index(request):
@@ -88,39 +105,20 @@ def index(request):
     #Get all the id of trips that user has requested to join
     request_list = Request.objects.filter(user = request.user.id).values_list('trip',flat = True)
 
+
     #Gets all the trips that the user has created.
     user_trips = Trip.objects.filter(creator=request.user.id)
     #Gets the requests for the user's trips and gives to the index page the number of requests that have been sent to the user.
     other_requests = Request.objects.filter(trip=user_trips)
-
-    context_dict = {'trips': trips_list, 'requests': request_list, 'other_requests': len(other_requests)}
-
-    visits = request.session.get('visits')
-    requested_trips = []
-
-    context_dict['requested_trips'] = requested_trips
-    if not visits:
-        visits = 1
-    reset_last_visit_time = False
-
-    last_visit = request.session.get('last_visit')
-    if last_visit:
-        last_visit_time = datetime.datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
-
-        if (datetime.datetime.now() - last_visit_time).seconds > 0:
-            # ...reassign the value of the cookie to +1 of what it was before...
-            visits = visits + 1
-            # ...and update the last visit cookie, too.
-            reset_last_visit_time = True
+    # Are there new notifications?
+    if (request.user.is_active):
+        userProf = UserProfile.objects.get(user=request.user)
+        newNotif = userProf.hasNotifications
     else:
-        # Cookie last_visit doesn't exist, so create it to the current date/time.
-        reset_last_visit_time = True
+        newNotif = False
 
-    if reset_last_visit_time:
-        request.session['last_visit'] = str(datetime.datetime.now())
-        request.session['visits'] = visits
+    context_dict = {'trips': trips_list, 'requests': request_list, 'newnotif':newNotif}
 
-    context_dict['visits'] = visits
     visits = request.session.get('visits')
 
     if not visits:
@@ -173,10 +171,6 @@ def addTrip(request):
         form = TripForm()
 
     return render(request, 'TripShare/post.html', {'form' : form})
-
-def test(request):
-    context_dict = {}
-    return render(request, 'TripShare/test.html', context_dict)
 
 #Handles user's login
 def user_login(request):
@@ -287,8 +281,12 @@ def view_profile(request, username):
 
 #Returns all the requests that have been submitted for a user's trips.
 @login_required
-def view_requests(request, username):
-    user = User.objects.get(username=username)
+def view_requests(request):
+    user = request.user
+    userProf = UserProfile.objects.get(user=user)
+    # New notifications are being viewed so change the flag back to false
+    userProf.hasNotifications = False
+    userProf.save()
 
     #Gets all the requests the user has submitted.
     user_requests = Request.objects.filter(user=user)
