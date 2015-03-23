@@ -340,3 +340,15 @@ def rate_user(request):
         avgRating = ratings['rating__avg']
 
     return HttpResponse(avgRating)
+
+@login_required
+def check_notifications(request):
+    if request.method == 'POST':
+        userid = request.POST.get('usrid')
+        user = User.objects.get(id=userid)
+        userProf=UserProfile.objects.get(user=user)
+        # Check if the user has new notifications
+        hasNew = userProf.hasNotifications
+        return HttpResponse(hasNew)
+    else:
+        return HttpResponse()

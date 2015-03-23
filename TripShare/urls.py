@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url(r'^respond_request/$', views.respond_request, name='respond_request'),
     url(r'^rate/$', views.rate_user, name='rate'),
     url(r'^search_user/$', views.search_user, name='search_user'),
+    url(r'^checknotif/$', views.check_notifications, name='check_notifications'),
     )

@@ -15,6 +15,29 @@ $(document).ready(function() {
         });
     });
 
+    setInterval(function(){
+        checkNotifications() // this will run every 10 seconds
+    }, 10000);
+
+    function checkNotifications() {
+        $requestsbtn = $('#requestsbtn');
+        $.ajax({
+            type: "POST",
+            url: "/TripShare/checknotif/",
+            data: {
+                'usrid': $requestsbtn.attr('user-id'),
+                'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+            },
+            success: function (response) {
+                if (response == "True") {
+                    $requestsbtn.addClass('newnotif');
+                } else {
+                    $requestsbtn.removeClass('newnotif');
+                }
+            }
+        });
+    }
+
     //Shows everything in the index page.
     $('#clear_city_btn').click(function(){
         $('#search_city').val("");
