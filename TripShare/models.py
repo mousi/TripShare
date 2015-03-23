@@ -60,8 +60,7 @@ class Trip(models.Model):
 		self.cost = 0
 	
 	current_date = datetime.datetime.today()
-	print type(self.tripdate) is datetime.datetime
-	print type(current_date) is datetime.datetime
+
 	if self.tripdate < current_date:
 		self.tripdate = datetime.datetime.today()
 	
