@@ -63,7 +63,7 @@ class Trip(models.Model):
 	print type(self.tripdate) is datetime.datetime
 	print type(current_date) is datetime.datetime
 	if self.tripdate < current_date:
-		self.tripdate = datetime.datetime.today()
+		self.tripdate = current_date
 	
         super(Trip, self).save(*args, **kwargs)
 
