@@ -34,7 +34,7 @@ If you want to create an admin enter the following:
 ```
 python manage.py createsuperuser
 ```
-and follow the instructions. There is a super user in the live demo with credentials: username: root password: tripshare .
+and follow the instructions. There is a super user in the live demo with credentials: <b>username:</b> root, <b>password:</b> tripshare .
 
 Finally, enter the following to your terminal:
 ```
