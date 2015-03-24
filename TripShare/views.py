@@ -172,7 +172,7 @@ def addTrip(request):
             trip.creator = request.user
             trip.save()
 
-            return index(request)
+            return HttpResponseRedirect('/TripShare/')
         else:
             print form.errors
     else:

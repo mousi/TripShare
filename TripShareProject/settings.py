@@ -27,11 +27,11 @@ TEMPLATE_DIRS = [
 SECRET_KEY = 'ra54r-^_$_7ma4j%+%c^d+jknrqntqlyqsa)0vkpe_ikv)4l72'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['tripshare.pythonanywhere.com']
 
 
 # Application definition
