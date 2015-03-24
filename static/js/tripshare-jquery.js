@@ -197,4 +197,22 @@ $(document).ready(function() {
             }
         });
     });
+    $(function() {
+        $("#search_user").autocomplete({
+            source: function( request, response ) {
+                $.ajax({
+                    type:'POST',
+                    url: "/TripShare/get_users/",
+                    data: {
+                        q: request.term,
+                        csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+                    },
+                    success: function( data ) {
+                        response( data );
+                    }
+                });
+            },
+            minLength: 2
+        });
+    });
 });

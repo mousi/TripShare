@@ -5,9 +5,10 @@ from django.contrib.auth import *
 from django.db.models import Avg, Count
 from django.http import HttpResponseRedirect, HttpResponse
 import datetime
+import json
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
-from django.http import Http404
+
 
 #Creates a request to join a trip.
 @login_required
@@ -332,6 +333,7 @@ def rate_user(request):
     else:
         return HttpResponse()
 
+# This checks for new notifications
 @login_required
 def check_notifications(request):
     if request.method == 'POST':
@@ -342,5 +344,26 @@ def check_notifications(request):
         # Check if the user has new notifications
         hasNew = userProf.hasNotifications
         return HttpResponse(hasNew)
+    else:
+        return HttpResponse()
+
+# This returns the usernames to autocomplete the user search field
+@login_required
+def get_users(request):
+    if request.is_ajax():
+        # Get the part of the username
+        q = request.POST.get('q')
+        # Find all users whose username contains q
+        users = User.objects.filter(username__contains=q)
+
+        # Create a list of usernames
+        usernames = []
+        for usr in users:
+            # We don't want to display the superuser
+            if not usr.is_superuser:
+                usernames.append(usr.username)
+
+        data = json.dumps(usernames)
+        return HttpResponse(data, content_type ="application/json")
     else:
         return HttpResponse()
