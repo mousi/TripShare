@@ -40,5 +40,15 @@ Finally, enter the following to your terminal:
 ```
 python manage.py runserver
 ```
+There are some premade accounts created for you:
+<table>
+<tr><th>Username</th><th>Password</th></tr>
+<tr><td>mousi</td><td>tripshare</td></tr>
+<tr><td>geo</td><td>tripshare</td></tr>
+<tr><td>jenny</td><td>tripshare</td></tr>
+<tr><td>liverpoolaras</td><td>tripshare</td></tr>
+<tr><td>thanos</td><td>tripshare</td></tr>
+<tr><td>molester</td><td>tripshare</td></tr>
+</table>
 
 Enjoy!!!
