@@ -3,7 +3,7 @@ TripShare is a team project for ITECH 2015.
 
 Clone the application to your machine:
 ```
-git clone https://github.com/liverpoolaras/TripShareProject.git
+git clone https://github.com/mousi/TripShareProject.git
 ```
 
 To install it to your machine, first create a virtual environment <name>. 
